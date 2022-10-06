@@ -2291,7 +2291,7 @@ def main_sign_in():
                                     dcanvas.coords("label40",dwidth/1.52,dheight/0.436)
                                     dcanvas.coords("label41",dwidth/1.52,dheight/0.412)
                                     dcanvas.coords("label42",dwidth/1.52,dheight/0.3905)
-                                    dcanvas.coords("label43",dwidth/1.54,dheight/1.45)
+                                    dcanvas.coords("label435",dwidth/1.54,dheight/1.45)
                                     dcanvas.coords("label25ref",dwidth/1.18,dheight/1.45)
 
                                     
@@ -2350,21 +2350,20 @@ def main_sign_in():
                                     dcanvas.coords("est_entry11",dwidth/1.35,dheight/0.41)
                                     dcanvas.coords("est_entry12",dwidth/1.35,dheight/0.398)
                                     dcanvas.coords("est_entry13",dwidth/1.35,dheight/0.386)
-                                    dcanvas.coords("label40",dwidth/1.45,dheight/0.45)
-                                    # dcanvas.coords("label40",dwidth/1.45,dheight/0.45)
-                                    # dcanvas.coords("label40",dwidth/1.45,dheight/0.45)
-                                    # dcanvas.coords("label40",dwidth/1.45,dheight/0.45)
-                                    # dcanvas.coords("label40",dwidth/1.45,dheight/0.45)
-                                    # dcanvas.coords("label40",dwidth/1.45,dheight/0.45)
+                                    dcanvas.coords("label40",dwidth/1.45,dheight/0.445)
+                                    dcanvas.coords("label41",dwidth/1.45,dheight/0.430)
+                                    dcanvas.coords("label42",dwidth/1.45,dheight/0.418 )
+                                    dcanvas.coords("label43",dwidth/1.60,dheight/0.406)
+                                    dcanvas.coords("label44",dwidth/1.45,dheight/0.394)
+                                    dcanvas.coords("label45",dwidth/1.46,dheight/0.382)
+                                    dcanvas.coords("tcs_sltr",dwidth/1.55,dheight/0.41)
+                                    dcanvas.coords("button3",dwidth/28,dheight/3)
 
-
-                                    
-
-                                    
                                     dcanvas.coords("entry26",dwidth/11,dheight/0.751)
 
                                     dcanvas.coords("entry27",dwidth/4.7,dheight/1.057)
                                     dcanvas.coords("entry28",dwidth/2.43,dheight/1.057)
+                                    
                                     dcanvas.coords("entry29",dwidth/1.91,dheight/1.057)
                                     dcanvas.coords("entry30",dwidth/1.46,dheight/1.057)
 
@@ -3721,10 +3720,16 @@ def main_sign_in():
                             es_label25 = Label(sr_Canvas_1,width=10,height=1,text="TCS",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
                             sr_Canvas_1.create_window(0,0,window=es_label25,tags=('label43'))
 
+                            tax_Combo = ttk.Combobox(sr_Canvas_1,width=8,font=('arial 15'))
+                            tax_Combo["values"] = "cust_list"
+                            tax_Combo.current(0)
+                            tax_Combo.bind("<<ComboboxSelected>>","es_fetch_custDetails")
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=tax_Combo,tags=("tcs_sltr"))
+
                             es_label26 = Label(sr_Canvas_1,width=10,height=1,text="Roundoff",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
                             sr_Canvas_1.create_window(0,0,window=es_label26,tags=('label44'))
 
-                            es_label27 = Label(sr_Canvas_1,width=10,height=1,text="Estimate Total",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            es_label27 = Label(sr_Canvas_1,height=1,text="Estimate Total",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
                             sr_Canvas_1.create_window(0,0,window=es_label27,tags=('label45'))
 
 
@@ -3744,8 +3749,8 @@ def main_sign_in():
                             sr_Canvas_1.create_window(0,0,window=save_btn,tags=("button7")) 
 
                             def sr_goBack():
-                                sr_Frame_1.grid_forget()
-                                sr_Frame.grid(row=0,column=0,sticky='nsew')
+                                sr_Canvas_1.grid_forget()
+                                
 
                             back_btn = Button(sr_Canvas_1,text='←  Back',font=('arial 10 bold'),bd=0,activebackground='#2f516f',foreground='white',background='#2f516f',command=lambda:sr_goBack())
                             sr_Canvas_1.create_window(0,0,window=back_btn,tags=("button3"))
@@ -3754,7 +3759,7 @@ def main_sign_in():
                             sr_Canvas_1.create_window(0,0,window=es_label6,tags=('label24'))
 
                             es_label28 = Label(sr_Canvas_1,width=20,height=1,text="Expiration Date",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
-                            sr_Canvas_1.create_window(0,0,window=es_label28,tags=('label43'))
+                            sr_Canvas_1.create_window(0,0,window=es_label28,tags=('label435'))
 
                             cwidth = root.winfo_screenwidth()
 
@@ -3772,7 +3777,1743 @@ def main_sign_in():
                                 sr_Canvas_1.create_window(465,407,anchor='nw',window=es_estdate,tags=("date"))
                                 sr_Canvas_1.create_window(730,407,anchor='nw',window=es_expdate,tags=("date1"))
 
+                    def row_selection(event):
+                        estm_Canvas_1= Canvas(estm_Frame,bg='#2f516f',scrollregion=(0,0,700,2000))
+                        def resestms(event):
+                            dwidth = event.width
+                            dheight = event.height
+                            dcanvas = event.widget
+                            
 
+                            r1 = 25
+                            x1 = dwidth/63
+                            x2 = dwidth/1.021
+                            y1 = dheight/14 
+                            y2 = dheight/3.505
+
+                            dcanvas.coords("poly1",x1 + r1,y1,
+                            x1 + r1,y1,
+                            x2 - r1,y1,
+                            x2 - r1,y1,     
+                            x2,y1,     
+                            #--------------------
+                            x2,y1 + r1,     
+                            x2,y1 + r1,     
+                            x2,y2 - r1,     
+                            x2,y2 - r1,     
+                            x2,y2,
+                            #--------------------
+                            x2 - r1,y2,     
+                            x2 - r1,y2,     
+                            x1 + r1,y2,
+                            x1 + r1,y2,
+                            x1,y2,
+                            #--------------------
+                            x1,y2 - r1,
+                            x1,y2 - r1,
+                            x1,y1 + r1,
+                            x1,y1 + r1,
+                            x1,y1,
+                            )
+
+                            dcanvas.coords("hline",dwidth/21,dheight/5,dwidth/1.055,dheight/5)
+                            
+                            r2 = 0
+                            x11 = dwidth/8
+                            x21 = dwidth/1.15
+                            y11 = dheight/2.8
+                            y21 = dheight/0.41
+
+
+                            dcanvas.coords("poly2",x11 + r2,y11,
+                            x11 + r2,y11,
+                            x21 - r2,y11,
+                            x21 - r2,y11,     
+                            x21,y11,     
+                            #--------------------
+                            x21,y11 + r2,     
+                            x21,y11 + r2,     
+                            x21,y21 - r2,     
+                            x21,y21 - r2,     
+                            x21,y21,
+                            #--------------------
+                            x21 - r2,y21,     
+                            x21 - r2,y21,     
+                            x11 + r2,y21,
+                            x11 + r2,y21,
+                            x11,y21,
+                            #--------------------
+                            x11,y21 - r2,
+                            x11,y21 - r2,
+                            x11,y11 + r2,
+                            x11,y11 + r2,
+                            x11,y11,
+                            )
+
+                            dcanvas.coords("label1",dwidth/2,dheight/8.24)
+                            dcanvas.coords("button3",dwidth/28,dheight/3)
+                            dcanvas.coords("act_btn1",dwidth/1.7,dheight/4)
+                            dcanvas.coords("act_btn2",dwidth/1.5,dheight/4)
+                            dcanvas.coords("act_btn3",dwidth/1.34,dheight/4)
+                            dcanvas.coords("act_btn4",dwidth/1.21,dheight/4)
+                            dcanvas.coords("act_btn5",dwidth/1.09,dheight/4)
+
+                        def edit_estim_fn():
+                            sr_Canvas_1 = Canvas(estm_Frame,bg='#2f516f',scrollregion=(0,0,700,2500))
+
+                            def responsive_widgets1(event):
+                                dwidth = event.width
+                                dheight = event.height
+                                dcanvas = event.widget
+                                
+                                r1 = 25
+                                x1 = dwidth/63
+                                x2 = dwidth/1.021
+                                y1 = dheight/14 
+                                y2 = dheight/3.505
+
+                                dcanvas.coords("poly1",x1 + r1,y1,
+                                x1 + r1,y1,
+                                x2 - r1,y1,
+                                x2 - r1,y1,     
+                                x2,y1,     
+                                #--------------------
+                                x2,y1 + r1,     
+                                x2,y1 + r1,     
+                                x2,y2 - r1,     
+                                x2,y2 - r1,     
+                                x2,y2,
+                                #--------------------
+                                x2 - r1,y2,     
+                                x2 - r1,y2,     
+                                x1 + r1,y2,
+                                x1 + r1,y2,
+                                x1,y2,
+                                #--------------------
+                                x1,y2 - r1,
+                                x1,y2 - r1,
+                                x1,y1 + r1,
+                                x1,y1 + r1,
+                                x1,y1,
+                                )
+
+                                dcanvas.coords("hline",dwidth/21,dheight/4.67,dwidth/1.055,dheight/4.67)
+
+                                r2 = 25
+                                x11 = dwidth/63
+                                x21 = dwidth/1.021
+                                y11 = dheight/2.8
+                                y21 = dheight/0.35
+
+
+                                dcanvas.coords("poly3",x11 + r2,y11,
+                                x11 + r2,y11,
+                                x21 - r2,y11,
+                                x21 - r2,y11,     
+                                x21,y11,     
+                                #--------------------
+                                x21,y11 + r2,     
+                                x21,y11 + r2,     
+                                x21,y21 - r2,     
+                                x21,y21 - r2,     
+                                x21,y21,
+                                #--------------------
+                                x21 - r2,y21,     
+                                x21 - r2,y21,     
+                                x11 + r2,y21,
+                                x11 + r2,y21,
+                                x11,y21,
+                                #--------------------
+                                x11,y21 - r2,
+                                x11,y21 - r2,
+                                x11,y11 + r2,
+                                x11,y11 + r2,
+                                x11,y11,
+                                )
+                                dcanvas.coords("label1",dwidth/2,dheight/8.24)
+                                dcanvas.coords("label2",dwidth/2,dheight/2.4)
+
+                                
+
+                                #sales receipt-----------
+                                try:
+                                    dcanvas.coords("label21",dwidth/7.91,dheight/1.76)
+                                    dcanvas.coords("label22",dwidth/2.47,dheight/1.76)
+                                    dcanvas.coords("label23",dwidth/6.13,dheight/1.44)
+                                    dcanvas.coords("label24",dwidth/2.27,dheight/1.45)
+                                    dcanvas.coords("label25",dwidth/6.13,dheight/0.907)
+                                    dcanvas.coords("label26",dwidth/6.13,dheight/0.81)
+                                    dcanvas.coords("label27",dwidth/2.27,dheight/0.81)
+                                    try:
+                                        dcanvas.coords("label28",dwidth/1.395,dheight/0.81)
+                                    except:
+                                        pass
+                                    dcanvas.coords("label29",dwidth/1.225,dheight/1.75)
+                                    dcanvas.coords("label30",dwidth/1.2,dheight/1.63)
+                                    dcanvas.coords("label31",dwidth/20,dheight/0.675)
+                                    dcanvas.coords("label32",dwidth/20,dheight/0.62)
+                                    dcanvas.coords("label64",dwidth/20,dheight/0.565)
+                                    dcanvas.coords("label65",dwidth/20,dheight/0.519)
+                                    dcanvas.coords("label66",dwidth/20,dheight/0.481)
+                                    dcanvas.coords("label67",dwidth/2.06,dheight/0.6)
+                                    dcanvas.coords("label68",dwidth/2.06,dheight/0.549)
+                                    dcanvas.coords("label69",dwidth/2.06,dheight/0.506)
+                                    dcanvas.coords("label70",dwidth/2.06,dheight/0.47)
+                                    dcanvas.coords("label33",dwidth/7.91,dheight/0.675)
+                                    dcanvas.coords("label34",dwidth/4.2,dheight/0.675)
+                                    dcanvas.coords("label35",dwidth/2.74,dheight/0.675)
+                                    dcanvas.coords("label36",dwidth/2.07,dheight/0.675)
+                                    dcanvas.coords("label37",dwidth/1.68,dheight/0.675)
+                                    dcanvas.coords("label38",dwidth/1.39,dheight/0.675)
+                                    dcanvas.coords("label39",dwidth/1.205,dheight/0.675)
+                                    dcanvas.coords("label40",dwidth/1.52,dheight/0.436)
+                                    dcanvas.coords("label41",dwidth/1.52,dheight/0.412)
+                                    dcanvas.coords("label42",dwidth/1.52,dheight/0.3905)
+                                    dcanvas.coords("label435",dwidth/1.54,dheight/1.45)
+                                    dcanvas.coords("label25ref",dwidth/1.18,dheight/1.45)
+
+                                    
+
+                                    dcanvas.coords("label44",dwidth/20,dheight/1.135)
+                                    dcanvas.coords("label45",dwidth/20,dheight/1.03)
+                                    dcanvas.coords("label46",dwidth/7.4,dheight/1.135)
+                                    dcanvas.coords("label47",dwidth/3.342,dheight/1.135)
+                                    dcanvas.coords("label48",dwidth/2.19,dheight/1.135)
+                                    dcanvas.coords("label49",dwidth/1.68,dheight/1.135)
+                                    dcanvas.coords("label50",dwidth/1.328,dheight/1.135)
+                                    dcanvas.coords("label51",dwidth/1.11,dheight/1.135)
+                                    dcanvas.coords("label52",dwidth/1.41,dheight/0.83)
+                                    dcanvas.coords("label53",dwidth/1.41,dheight/0.77)
+                                    dcanvas.coords("label54",dwidth/1.41,dheight/0.715)
+
+                                    dcanvas.coords("label55",dwidth/2.4,dheight/2.254)
+                                    dcanvas.coords("label56",dwidth/1.49,dheight/2.254)
+                                    dcanvas.coords("label57",dwidth/2.4,dheight/1.8)
+                                    dcanvas.coords("label58",dwidth/2.4,dheight/1.5)
+                                    dcanvas.coords("label59",dwidth/2.4,dheight/1.28)
+                                    dcanvas.coords("label60",dwidth/1.598,dheight/1.28)
+                                    dcanvas.coords("label61",dwidth/1.212,dheight/1.28)
+                                    dcanvas.coords("label62",dwidth/2.4,dheight/1.105)
+                                    dcanvas.coords("label63",dwidth/2.4,dheight/0.979)
+
+                                    dcanvas.coords("entry13",dwidth/2.72,dheight/1.68)
+                                    dcanvas.coords("entry14",dwidth/11,dheight/1.39)
+                                    dcanvas.coords("entry15",dwidth/11,dheight/0.885)
+                                    dcanvas.coords("entry16",dwidth/11,dheight/0.79)
+                                    dcanvas.coords("entry17",dwidth/2.72,dheight/0.79)
+                                    dcanvas.coords("entry18",dwidth/5.13,dheight/0.63)
+                                    dcanvas.coords("entry19",dwidth/3.39,dheight/0.63)
+                                    dcanvas.coords("entry20",dwidth/2.24,dheight/0.63)
+                                    dcanvas.coords("entry21",dwidth/1.85,dheight/0.63)
+                                    dcanvas.coords("entry22",dwidth/1.5,dheight/0.63)
+                                    dcanvas.coords("entry39",dwidth/5.13,dheight/0.5745)
+                                    dcanvas.coords("entry40",dwidth/3.39,dheight/0.5745)
+                                    dcanvas.coords("entry41",dwidth/2.24,dheight/0.5745)
+                                    dcanvas.coords("entry42",dwidth/1.85,dheight/0.5745)
+                                    dcanvas.coords("entry43",dwidth/1.5,dheight/0.5745)
+                                    dcanvas.coords("entry44",dwidth/5.13,dheight/0.527)
+                                    dcanvas.coords("entry45",dwidth/3.39,dheight/0.527)
+                                    dcanvas.coords("entry46",dwidth/2.24,dheight/0.527)
+                                    dcanvas.coords("entry47",dwidth/1.85,dheight/0.527)
+                                    dcanvas.coords("entry48",dwidth/1.5,dheight/0.527)
+                                    dcanvas.coords("entry49",dwidth/5.13,dheight/0.487)
+                                    dcanvas.coords("entry50",dwidth/3.39,dheight/0.487)
+                                    dcanvas.coords("entry51",dwidth/2.24,dheight/0.487)
+                                    dcanvas.coords("entry52",dwidth/1.85,dheight/0.487)
+                                    dcanvas.coords("entry53",dwidth/1.5,dheight/0.487)
+
+                                    dcanvas.coords("entry23",dwidth/1.35,dheight/0.45)
+                                    dcanvas.coords("entry24",dwidth/1.35,dheight/0.435)
+                                    dcanvas.coords("entry25",dwidth/1.35,dheight/0.422)
+                                    dcanvas.coords("est_entry11",dwidth/1.35,dheight/0.41)
+                                    dcanvas.coords("est_entry12",dwidth/1.35,dheight/0.398)
+                                    dcanvas.coords("est_entry13",dwidth/1.35,dheight/0.386)
+                                    dcanvas.coords("label40",dwidth/1.45,dheight/0.445)
+                                    dcanvas.coords("label41",dwidth/1.45,dheight/0.430)
+                                    dcanvas.coords("label42",dwidth/1.45,dheight/0.418 )
+                                    dcanvas.coords("label43",dwidth/1.60,dheight/0.406)
+                                    dcanvas.coords("label44",dwidth/1.45,dheight/0.394)
+                                    dcanvas.coords("label45",dwidth/1.46,dheight/0.382)
+                                    dcanvas.coords("tcs_sltr",dwidth/1.55,dheight/0.41)
+                                    dcanvas.coords("button3",dwidth/28,dheight/3)
+
+                                    dcanvas.coords("entry26",dwidth/11,dheight/0.751)
+
+                                    dcanvas.coords("entry27",dwidth/4.7,dheight/1.057)
+                                    dcanvas.coords("entry28",dwidth/2.43,dheight/1.057)
+                                    
+                                    dcanvas.coords("entry29",dwidth/1.91,dheight/1.057)
+                                    dcanvas.coords("entry30",dwidth/1.46,dheight/1.057)
+
+                                    dcanvas.coords("entry31",dwidth/1.275,dheight/0.85)
+                                    dcanvas.coords("entry32",dwidth/1.275,dheight/0.784)
+                                    dcanvas.coords("entry33",dwidth/1.275,dheight/0.727)
+                                    dcanvas.coords("entry34",dwidth/1.525,dheight/1.45)
+
+                                    dcanvas.coords("entry35",dwidth/1.81,dheight/1.24)
+                                    dcanvas.coords("entry54",dwidth/1.55,dheight/1.24)
+                                    dcanvas.coords("entry36",dwidth/1.33,dheight/1.24)
+                                    dcanvas.coords("entry55",dwidth/1.185,dheight/1.24)
+                                    dcanvas.coords("entry37",dwidth/2.91,dheight/1.08)
+                                    dcanvas.coords("entry56",dwidth/1.55,dheight/1.08)
+                                    dcanvas.coords("entry38",dwidth/2.91,dheight/0.96)
+
+                                    dcanvas.coords("combo3",dwidth/11,dheight/1.68)
+                                    try:
+                                        dcanvas.coords("combo4",dwidth/1.55,dheight/0.79)
+                                    except:
+                                        pass
+                                    dcanvas.coords("combo5",dwidth/7.909,dheight/0.62)
+                                    dcanvas.coords("combo6",dwidth/1.206,dheight/0.62)
+                                    dcanvas.coords("combo14",dwidth/7.909,dheight/0.5655)
+                                    dcanvas.coords("combo15",dwidth/1.206,dheight/0.5655)
+                                    dcanvas.coords("combo16",dwidth/7.909,dheight/0.519)
+                                    dcanvas.coords("combo17",dwidth/1.206,dheight/0.519)
+                                    dcanvas.coords("combo18",dwidth/7.909,dheight/0.481)
+                                    dcanvas.coords("combo19",dwidth/1.206,dheight/0.481)
+
+                                    dcanvas.coords("combo7",dwidth/7.4,dheight/1.035)
+                                    dcanvas.coords("combo8",dwidth/1.111,dheight/1.035)
+
+                                    dcanvas.coords("combo9",dwidth/1.294,dheight/2.05)
+                                    dcanvas.coords("combo10",dwidth/2.91,dheight/1.73)
+                                    dcanvas.coords("combo11",dwidth/2.91,dheight/1.45)
+                                    dcanvas.coords("combo12",dwidth/2.91,dheight/1.24)
+
+                                    dcanvas.coords("button5",dwidth/3.89,dheight/1.61)
+                                    try:
+                                        dcanvas.coords("button6",dwidth/1.23,dheight/0.775)
+                                    except:
+                                        pass
+                                    dcanvas.coords("button7",dwidth/1.114,dheight/0.365)
+                                    dcanvas.coords("button8",dwidth/1.114,dheight/0.45)
+
+                                    dcanvas.coords("button9",dwidth/1.09,dheight/2.04)
+                                    dcanvas.coords("button10",dwidth/1.09,dheight/1.66)
+                                    dcanvas.coords("button11",dwidth/1.57,dheight/0.79)
+
+                                    dcanvas.coords("button12",dwidth/1.09,dheight/0.619)
+                                    dcanvas.coords("button13",dwidth/1.09,dheight/0.565)
+                                    dcanvas.coords("button14",dwidth/1.09,dheight/0.518)
+                                    dcanvas.coords("button15",dwidth/1.09,dheight/0.48)
+                                    
+                                    dcanvas.coords("line17",dwidth/31.6,dheight/0.7,dwidth/1.039,dheight/0.7)
+                                    dcanvas.coords("line18",dwidth/31.6,dheight/0.65,dwidth/1.039,dheight/0.65)
+                                    dcanvas.coords("line19",dwidth/31.6,dheight/0.59,dwidth/1.039,dheight/0.59)
+                                    dcanvas.coords("line20",dwidth/31.6,dheight/0.541,dwidth/1.039,dheight/0.541)
+                                    dcanvas.coords("line21",dwidth/31.6,dheight/0.499,dwidth/1.039,dheight/0.499)
+                                    dcanvas.coords("line22",dwidth/31.6,dheight/0.464,dwidth/1.039,dheight/0.464)
+                                    dcanvas.coords("line23",dwidth/31.6,dheight/0.7,dwidth/31.6,dheight/0.464)
+                                    dcanvas.coords("line24",dwidth/1.039,dheight/0.7,dwidth/1.039,dheight/0.464)
+                                    dcanvas.coords("line25",dwidth/15,dheight/0.7,dwidth/15,dheight/0.464)
+                                    dcanvas.coords("line26",dwidth/5.35,dheight/0.7,dwidth/5.35,dheight/0.464)
+                                    dcanvas.coords("line27",dwidth/3.5,dheight/0.7,dwidth/3.5,dheight/0.464)
+                                    dcanvas.coords("line28",dwidth/2.28,dheight/0.7,dwidth/2.28,dheight/0.464)
+                                    dcanvas.coords("line29",dwidth/1.88,dheight/0.7,dwidth/1.88,dheight/0.464)
+                                    dcanvas.coords("line30",dwidth/1.52,dheight/0.7,dwidth/1.52,dheight/0.464)
+                                    dcanvas.coords("line31",dwidth/1.277,dheight/0.7,dwidth/1.277,dheight/0.464)
+                                    dcanvas.coords("line58",dwidth/1.144,dheight/0.7,dwidth/1.144,dheight/0.464)
+
+                                    dcanvas.coords("line32",dwidth/1.7,dheight/0.451,dwidth/1.039,dheight/0.451)
+                                    dcanvas.coords("line33",dwidth/1.7,dheight/0.425,dwidth/1.039,dheight/0.425)
+                                    dcanvas.coords("line34",dwidth/1.7,dheight/0.401,dwidth/1.039,dheight/0.401)
+                                    dcanvas.coords("line35",dwidth/1.7,dheight/0.38,dwidth/1.039,dheight/0.38)
+                                    dcanvas.coords("line36",dwidth/1.7,dheight/0.451,dwidth/1.7,dheight/0.38)
+                                    dcanvas.coords("line37",dwidth/1.365,dheight/0.451,dwidth/1.365,dheight/0.38)
+                                    dcanvas.coords("line38",dwidth/1.039,dheight/0.451,dwidth/1.039,dheight/0.38)
+
+                                    dcanvas.coords("line39",dwidth/31.6,dheight/1.2,dwidth/1.039,dheight/1.2)
+                                    dcanvas.coords("line40",dwidth/31.6,dheight/1.085,dwidth/1.039,dheight/1.085)
+                                    dcanvas.coords("line41",dwidth/31.6,dheight/0.99,dwidth/1.039,dheight/0.99)
+                                    dcanvas.coords("line42",dwidth/31.6,dheight/0.91,dwidth/1.039,dheight/0.91)
+                                    dcanvas.coords("line43",dwidth/31.6,dheight/1.2,dwidth/31.6,dheight/0.91)
+                                    dcanvas.coords("line44",dwidth/15,dheight/1.2,dwidth/15,dheight/0.91)
+                                    dcanvas.coords("line45",dwidth/4.9,dheight/1.2,dwidth/4.9,dheight/0.91)
+                                    dcanvas.coords("line46",dwidth/2.5,dheight/1.2,dwidth/2.5,dheight/0.91)
+                                    dcanvas.coords("line47",dwidth/1.95,dheight/1.2,dwidth/1.95,dheight/0.91)
+                                    dcanvas.coords("line48",dwidth/1.48,dheight/1.2,dwidth/1.48,dheight/0.91)
+                                    dcanvas.coords("line49",dwidth/1.195,dheight/1.2,dwidth/1.195,dheight/0.91)
+                                    dcanvas.coords("line50",dwidth/1.039,dheight/1.2,dwidth/1.039,dheight/0.91)
+
+                                    dcanvas.coords("line51",dwidth/1.55,dheight/0.87,dwidth/1.039,dheight/0.87)
+                                    dcanvas.coords("line52",dwidth/1.55,dheight/0.8,dwidth/1.039,dheight/0.8)
+                                    dcanvas.coords("line53",dwidth/1.55,dheight/0.74,dwidth/1.039,dheight/0.74)
+                                    dcanvas.coords("line54",dwidth/1.55,dheight/0.69,dwidth/1.039,dheight/0.69)
+                                    dcanvas.coords("line55",dwidth/1.55,dheight/0.87,dwidth/1.55,dheight/0.69)
+                                    dcanvas.coords("line56",dwidth/1.29,dheight/0.87,dwidth/1.29,dheight/0.69)
+                                    dcanvas.coords("line57",dwidth/1.039,dheight/0.87,dwidth/1.039,dheight/0.69)
+
+                                    dcanvas.coords("line59",dwidth/31.6,dheight/0.7,dwidth/1.039,dheight/0.7)
+                                    dcanvas.coords("line60",dwidth/31.6,dheight/0.65,dwidth/1.039,dheight/0.65)
+                                    dcanvas.coords("line61",dwidth/31.6,dheight/0.59,dwidth/1.039,dheight/0.59)
+                                    dcanvas.coords("line62",dwidth/31.6,dheight/0.541,dwidth/1.039,dheight/0.541)
+                                    dcanvas.coords("line63",dwidth/31.6,dheight/0.499,dwidth/1.039,dheight/0.499)
+                                    dcanvas.coords("line64",dwidth/31.6,dheight/0.464,dwidth/1.039,dheight/0.464)
+                                    dcanvas.coords("line65",dwidth/31.6,dheight/0.7,dwidth/31.6,dheight/0.464)
+                                    dcanvas.coords("line66",dwidth/1.039,dheight/0.7,dwidth/1.039,dheight/0.464)
+                                    dcanvas.coords("line67",dwidth/15,dheight/0.7,dwidth/15,dheight/0.464)
+                                    dcanvas.coords("line68",dwidth/4.5,dheight/0.7,dwidth/4.5,dheight/0.464)
+                                    dcanvas.coords("line69",dwidth/2.5,dheight/0.7,dwidth/2.5,dheight/0.464)
+                                    dcanvas.coords("line70",dwidth/2,dheight/0.7,dwidth/2,dheight/0.464)
+                                    dcanvas.coords("line71",dwidth/1.55,dheight/0.7,dwidth/1.55,dheight/0.464)
+                                    dcanvas.coords("line72",dwidth/1.277,dheight/0.7,dwidth/1.277,dheight/0.464)
+                                    dcanvas.coords("line73",dwidth/1.144,dheight/0.7,dwidth/1.144,dheight/0.464)
+
+                                    dcanvas.coords("line74",dwidth/1.7,dheight/0.451,dwidth/1.039,dheight/0.451)
+                                    dcanvas.coords("line75",dwidth/1.7,dheight/0.425,dwidth/1.039,dheight/0.425)
+                                    dcanvas.coords("line76",dwidth/1.7,dheight/0.401,dwidth/1.039,dheight/0.401)
+                                    dcanvas.coords("line77",dwidth/1.7,dheight/0.38,dwidth/1.039,dheight/0.38)
+                                    dcanvas.coords("line78",dwidth/1.7,dheight/0.451,dwidth/1.7,dheight/0.38)
+                                    dcanvas.coords("line79",dwidth/1.365,dheight/0.451,dwidth/1.365,dheight/0.38)
+                                    dcanvas.coords("line80",dwidth/1.039,dheight/0.451,dwidth/1.039,dheight/0.38)
+
+                                    dcanvas.coords("label71",dwidth/20,dheight/0.675)
+                                    dcanvas.coords("label72",dwidth/20,dheight/0.62)
+                                    dcanvas.coords("label73",dwidth/20,dheight/0.565)
+                                    dcanvas.coords("label74",dwidth/20,dheight/0.519)
+                                    dcanvas.coords("label75",dwidth/20,dheight/0.481)
+                                    dcanvas.coords("label76",dwidth/7,dheight/0.675)
+                                    dcanvas.coords("label77",dwidth/3.2,dheight/0.675)
+                                    dcanvas.coords("label78",dwidth/2.22,dheight/0.675)
+                                    dcanvas.coords("label79",dwidth/1.75,dheight/0.675)
+                                    dcanvas.coords("label80",dwidth/1.4,dheight/0.675)
+                                    dcanvas.coords("label81",dwidth/1.205,dheight/0.675)
+                                    dcanvas.coords("label82",dwidth/2.22,dheight/0.6)
+                                    dcanvas.coords("label83",dwidth/2.22,dheight/0.549)
+                                    dcanvas.coords("label84",dwidth/2.22,dheight/0.506)
+                                    dcanvas.coords("label85",dwidth/2.22,dheight/0.47)
+
+                                    dcanvas.coords("combo20",dwidth/6.98,dheight/0.62)
+                                    dcanvas.coords("combo21",dwidth/1.206,dheight/0.62)
+                                    dcanvas.coords("combo22",dwidth/6.98,dheight/0.5655)
+                                    dcanvas.coords("combo23",dwidth/1.206,dheight/0.5655)
+                                    dcanvas.coords("combo24",dwidth/6.98,dheight/0.519)
+                                    dcanvas.coords("combo25",dwidth/1.206,dheight/0.519)
+                                    dcanvas.coords("combo26",dwidth/6.98,dheight/0.481)
+                                    dcanvas.coords("combo27",dwidth/1.206,dheight/0.481)
+
+                                    dcanvas.coords("entry57",dwidth/4.32,dheight/0.63)
+                                    dcanvas.coords("entry58",dwidth/2.45,dheight/0.63)
+                                    dcanvas.coords("entry59",dwidth/1.965,dheight/0.63)
+                                    dcanvas.coords("entry60",dwidth/1.525,dheight/0.63)
+                                    dcanvas.coords("entry61",dwidth/4.32,dheight/0.5745)
+                                    dcanvas.coords("entry62",dwidth/2.45,dheight/0.5745)
+                                    dcanvas.coords("entry63",dwidth/1.965,dheight/0.5745)
+                                    dcanvas.coords("entry64",dwidth/1.525,dheight/0.5745)
+                                    dcanvas.coords("entry65",dwidth/4.32,dheight/0.527)
+                                    dcanvas.coords("entry66",dwidth/2.45,dheight/0.527)
+                                    dcanvas.coords("entry67",dwidth/1.965,dheight/0.527)
+                                    dcanvas.coords("entry68",dwidth/1.525,dheight/0.527)
+                                    dcanvas.coords("entry69",dwidth/4.32,dheight/0.487)
+                                    dcanvas.coords("entry70",dwidth/2.45,dheight/0.487)
+                                    dcanvas.coords("entry71",dwidth/1.965,dheight/0.487)
+                                    dcanvas.coords("entry72",dwidth/1.525,dheight/0.487)
+
+                                    dcanvas.coords("line81",dwidth/1.465,dheight/0.7,dwidth/1.465,dheight/0.464)
+                                    dcanvas.coords("line82",dwidth/1.2,dheight/0.7,dwidth/1.2,dheight/0.464)
+                                    
+                                    dcanvas.coords("label86",dwidth/1.65,dheight/0.675)
+                                    dcanvas.coords("label87",dwidth/1.325,dheight/0.675)
+                                    dcanvas.coords("label88",dwidth/1.115,dheight/0.675)
+
+                                    dcanvas.coords("entry73",dwidth/5.13,dheight/0.63)
+                                    dcanvas.coords("entry74",dwidth/3.39,dheight/0.63)
+                                    dcanvas.coords("entry75",dwidth/2.24,dheight/0.63)
+                                    dcanvas.coords("entry76",dwidth/1.848,dheight/0.63)
+                                    dcanvas.coords("entry77",dwidth/1.45,dheight/0.63)
+                                    dcanvas.coords("entry78",dwidth/5.13,dheight/0.5745)
+                                    dcanvas.coords("entry79",dwidth/3.39,dheight/0.5745)
+                                    dcanvas.coords("entry80",dwidth/2.24,dheight/0.5745)
+                                    dcanvas.coords("entry81",dwidth/1.848,dheight/0.5745)
+                                    dcanvas.coords("entry82",dwidth/1.45,dheight/0.5745)
+                                    dcanvas.coords("entry83",dwidth/5.13,dheight/0.527)
+                                    dcanvas.coords("entry84",dwidth/3.39,dheight/0.527)
+                                    dcanvas.coords("entry85",dwidth/2.24,dheight/0.527)
+                                    dcanvas.coords("entry86",dwidth/1.848,dheight/0.527)
+                                    dcanvas.coords("entry87",dwidth/1.45,dheight/0.527)
+                                    dcanvas.coords("entry88",dwidth/5.13,dheight/0.487)
+                                    dcanvas.coords("entry89",dwidth/3.39,dheight/0.487)
+                                    dcanvas.coords("entry90",dwidth/2.24,dheight/0.487)
+                                    dcanvas.coords("entry91",dwidth/1.848,dheight/0.487)
+                                    dcanvas.coords("entry92",dwidth/1.45,dheight/0.487)
+
+                                    dcanvas.coords("combo28",dwidth/1.112,dheight/0.62)
+                                    dcanvas.coords("combo29",dwidth/1.112,dheight/0.5655)
+                                    dcanvas.coords("combo30",dwidth/1.112,dheight/0.519)
+                                    dcanvas.coords("combo31",dwidth/1.112,dheight/0.481)
+
+                                    dcanvas.coords("line83",dwidth/31.6,dheight/1.12,dwidth/1.039,dheight/1.12)
+                                    dcanvas.coords("line84",dwidth/31.6,dheight/1,dwidth/1.039,dheight/1)
+                                    dcanvas.coords("line85",dwidth/31.6,dheight/0.87,dwidth/1.039,dheight/0.87)
+                                    dcanvas.coords("line86",dwidth/31.6,dheight/0.77,dwidth/1.039,dheight/0.77)
+                                    dcanvas.coords("line87",dwidth/31.6,dheight/0.69,dwidth/1.039,dheight/0.69)
+                                    dcanvas.coords("line88",dwidth/31.6,dheight/0.625,dwidth/1.039,dheight/0.625)
+                                    dcanvas.coords("line89",dwidth/31.6,dheight/1.12,dwidth/31.6,dheight/0.625)
+                                    dcanvas.coords("line90",dwidth/1.039,dheight/1.12,dwidth/1.039,dheight/0.625)
+                                    dcanvas.coords("line91",dwidth/15,dheight/1.12,dwidth/15,dheight/0.625)
+                                    dcanvas.coords("line92",dwidth/4.5,dheight/1.12,dwidth/4.5,dheight/0.625)
+                                    dcanvas.coords("line93",dwidth/2.5,dheight/1.12,dwidth/2.5,dheight/0.625)
+                                    dcanvas.coords("line94",dwidth/2,dheight/1.12,dwidth/2,dheight/0.625)
+                                    dcanvas.coords("line95",dwidth/1.5,dheight/1.12,dwidth/1.5,dheight/0.625)
+                                    dcanvas.coords("line96",dwidth/1.2,dheight/1.12,dwidth/1.2,dheight/0.625)
+
+                                    dcanvas.coords("line97",dwidth/1.7,dheight/0.6,dwidth/1.039,dheight/0.6)
+                                    dcanvas.coords("line98",dwidth/1.7,dheight/0.55,dwidth/1.039,dheight/0.55)
+                                    dcanvas.coords("line99",dwidth/1.7,dheight/0.507,dwidth/1.039,dheight/0.507)
+                                    dcanvas.coords("line100",dwidth/1.7,dheight/0.47,dwidth/1.039,dheight/0.47)
+                                    dcanvas.coords("line101",dwidth/1.7,dheight/0.6,dwidth/1.7,dheight/0.47)
+                                    dcanvas.coords("line102",dwidth/1.365,dheight/0.6,dwidth/1.365,dheight/0.47)
+                                    dcanvas.coords("line103",dwidth/1.039,dheight/0.6,dwidth/1.039,dheight/0.47)
+
+                                    dcanvas.coords("label89",dwidth/20,dheight/1.05)
+                                    dcanvas.coords("label90",dwidth/20,dheight/0.925)
+                                    dcanvas.coords("label91",dwidth/20,dheight/0.815)
+                                    dcanvas.coords("label92",dwidth/20,dheight/0.725)
+                                    dcanvas.coords("label93",dwidth/20,dheight/0.655)
+                                    dcanvas.coords("label94",dwidth/7,dheight/1.05)
+                                    dcanvas.coords("label95",dwidth/3.2,dheight/1.05)
+                                    dcanvas.coords("label96",dwidth/2.22,dheight/1.05)
+                                    dcanvas.coords("label97",dwidth/1.72,dheight/1.05)
+                                    dcanvas.coords("label98",dwidth/1.34,dheight/1.05)
+                                    dcanvas.coords("label99",dwidth/1.121,dheight/1.05)
+
+                                    dcanvas.coords("label100",dwidth/1.52,dheight/0.572)
+                                    dcanvas.coords("label101",dwidth/1.52,dheight/0.528)
+                                    dcanvas.coords("label102",dwidth/1.52,dheight/0.487)
+
+                                    dcanvas.coords("label103",dwidth/2.22,dheight/0.89)
+                                    dcanvas.coords("label104",dwidth/2.22,dheight/0.785)
+                                    dcanvas.coords("label105",dwidth/2.22,dheight/0.701)
+                                    dcanvas.coords("label106",dwidth/2.22,dheight/0.635)
+
+                                    dcanvas.coords("entry93",dwidth/4.32,dheight/0.952)
+                                    dcanvas.coords("entry94",dwidth/2.45,dheight/0.952)
+                                    dcanvas.coords("entry95",dwidth/1.967,dheight/0.952)
+                                    dcanvas.coords("entry96",dwidth/1.485,dheight/0.952)
+                                    dcanvas.coords("entry97",dwidth/4.32,dheight/0.835)
+                                    dcanvas.coords("entry98",dwidth/2.45,dheight/0.835)
+                                    dcanvas.coords("entry99",dwidth/1.967,dheight/0.835)
+                                    dcanvas.coords("entry100",dwidth/1.485,dheight/0.835)
+                                    dcanvas.coords("entry101",dwidth/4.32,dheight/0.742)
+                                    dcanvas.coords("entry102",dwidth/2.45,dheight/0.742)
+                                    dcanvas.coords("entry103",dwidth/1.967,dheight/0.742)
+                                    dcanvas.coords("entry104",dwidth/1.485,dheight/0.742)
+                                    dcanvas.coords("entry105",dwidth/4.32,dheight/0.667)
+                                    dcanvas.coords("entry106",dwidth/2.45,dheight/0.667)
+                                    dcanvas.coords("entry107",dwidth/1.967,dheight/0.667)
+                                    dcanvas.coords("entry108",dwidth/1.485,dheight/0.667)
+
+                                    dcanvas.coords("entry109",dwidth/1.35,dheight/0.582)
+                                    dcanvas.coords("entry110",dwidth/1.35,dheight/0.535)
+                                    dcanvas.coords("entry111",dwidth/1.35,dheight/0.494)
+
+                                    dcanvas.coords("combo32",dwidth/6.98,dheight/0.93)
+                                    dcanvas.coords("combo33",dwidth/1.112,dheight/0.93)
+                                    dcanvas.coords("combo34",dwidth/6.98,dheight/0.815)
+                                    dcanvas.coords("combo35",dwidth/1.112,dheight/0.815)
+                                    dcanvas.coords("combo36",dwidth/6.98,dheight/0.728)
+                                    dcanvas.coords("combo37",dwidth/1.112,dheight/0.728)
+                                    dcanvas.coords("combo38",dwidth/6.98,dheight/0.655)
+                                    dcanvas.coords("combo39",dwidth/1.112,dheight/0.655)
+
+                                    dcanvas.coords("date",dwidth/2.71,dheight/1.392)
+                                    dcanvas.coords("date1",dwidth/1.73,dheight/1.392)
+
+                                    dcanvas.coords("entry87ref",dwidth/1.29,dheight/1.392)
+
+                                except:
+                                    pass
+
+                                
+
+                            sr_Scroll_1 = Scrollbar(estm_Frame,orient=VERTICAL)
+                            sr_Scroll_1.grid(row=0,column=1,sticky='ns')
+                            sr_Scroll_1.config(command=sr_Canvas_1.yview)
+                            sr_Canvas_1.bind("<Configure>", responsive_widgets1)
+                            sr_Canvas_1.config(yscrollcommand=sr_Scroll_1.set)
+                            sr_Canvas_1.grid(row=0,column=0,sticky='nsew')
+
+                            
+                            sr_Canvas_1.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("poly1"))
+                            es_label1 = Label(sr_Canvas_1,width=18,height=1,text="ESTIMATE",font=('arial 25'),background='#1b3857',fg="white")
+                            sr_Canvas_1.create_window(0,0,anchor="c",window=es_label1,tags=("label1"))
+                            sr_Canvas_1.create_line(0,0,0,0,fill='gray',width=1,tags=("hline"))
+
+                            sr_Canvas_1.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("poly3"))   
+
+                            es_label2 = Label(sr_Canvas_1,width=18,height=1,text="Fin sYs",font=('arial 25'),background='#1b3857',fg="white")
+                            sr_Canvas_1.create_window(0,0,anchor="c",window=es_label2,tags=("label2"))
+
+                            es_label3 = Label(sr_Canvas_1,width=10,height=1,text="Customer",font=('arial 12'),background='#1b3857',fg="white",anchor="w")
+                            sr_Canvas_1.create_window(0,0,window=es_label3,tags=("label21"))
+
+                            user_sql = "SELECT id FROM auth_user WHERE username=%s"
+                            user_val = (nm_ent.get(),)
+                            fbcursor.execute(user_sql,user_val)
+                            user_data = fbcursor.fetchone()
+
+                            comp_sql = 'SELECT * FROM app1_company WHERE id_id=%s'
+                            comp_val = (user_data[0],)
+                            fbcursor.execute(comp_sql,comp_val)
+                            comp_data = fbcursor.fetchone()
+
+                            cust_sql = "SELECT firstname,lastname FROM app1_customer WHERE cid_id=%s"
+                            cust_val = (comp_data[0],)
+                            fbcursor.execute(cust_sql,cust_val)
+                            cust_data = fbcursor.fetchall()
+
+                            cust_list = []
+                            if not cust_data:
+                                cust_list.append('Select Customer')
+                            else:
+                                for c in cust_data:
+                                    cust_list.append(c[0] + " " + c[1])
+                                cust_list.insert(0,'Select Customer')
+
+                            def es_fetch_custDetails(event):
+                                cust_name = es_custCombo.get()
+                                cust_fname = cust_name.split(" ")[0]
+                                cust_lname = cust_name.split(" ")[1]
+
+                                cust_sql = "SELECT * FROM app1_customer WHERE firstname=%s and lastname=%s and cid_id=%s"
+                                cust_val = (cust_fname,cust_lname,comp_data[0])
+                                fbcursor.execute(cust_sql,cust_val)
+                                cust_data = fbcursor.fetchone()
+
+                                inv_sql = "SELECT * FROM app1_invoice WHERE customername=%s and cid_id=%s"
+                                inv_val = (cust_name,comp_data[0])
+                                fbcursor.execute(inv_sql,inv_val)
+                                inv_data = fbcursor.fetchall()
+
+                                try:
+                                    if not cust_data:
+                                        pass
+                                    else:
+                                        es_email.delete(0,END)
+                                        es_email.insert(0,cust_data[9])
+                                        es_baddress.delete("1.0","end-1c")
+                                        es_baddress.insert("1.0",cust_data[2] + " " + cust_data[3] + "\n" + cust_data[4] + "\n" + cust_data[12] + "\n" + cust_data[13] + "\n" + cust_data[14] + "\n" + cust_data[15] + "\n" + cust_data[16])
+                                        es_pofsupply.delete(0,END)
+                                        es_pofsupply.insert(0,comp_data[4])
+                                except:
+                                    pass
+
+                            es_custCombo = ttk.Combobox(sr_Canvas_1,width=15,font=('arial 15'))
+                            es_custCombo["values"] = cust_list
+                            es_custCombo.current(0)
+                            es_custCombo.bind("<<ComboboxSelected>>",es_fetch_custDetails)
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=es_custCombo,tags=("combo3"))
+
+                            def sr_addCustomer_1():
+                                
+                                sr_Frame_2 = Frame(estm_Frame,)
+                                sr_Frame_2.grid(row=0,column=0,sticky='nsew')
+
+                                def responsive_widgets2(event):
+                                    dwidth = event.width
+                                    dheight = event.height
+                                    dcanvas = event.widget
+                                    
+                                    r1 = 25
+                                    x1 = dwidth/63
+                                    x2 = dwidth/1.021
+                                    y1 = dheight/14 
+                                    y2 = dheight/3.505
+
+                                    dcanvas.coords("poly1",x1 + r1,y1,
+                                    x1 + r1,y1,
+                                    x2 - r1,y1,
+                                    x2 - r1,y1,     
+                                    x2,y1,     
+                                    #--------------------
+                                    x2,y1 + r1,     
+                                    x2,y1 + r1,     
+                                    x2,y2 - r1,     
+                                    x2,y2 - r1,     
+                                    x2,y2,
+                                    #--------------------
+                                    x2 - r1,y2,     
+                                    x2 - r1,y2,     
+                                    x1 + r1,y2,
+                                    x1 + r1,y2,
+                                    x1,y2,
+                                    #--------------------
+                                    x1,y2 - r1,
+                                    x1,y2 - r1,
+                                    x1,y1 + r1,
+                                    x1,y1 + r1,
+                                    x1,y1,
+                                    )
+
+                                    dcanvas.coords("hline",dwidth/21,dheight/4.67,dwidth/1.055,dheight/4.67)
+                                    
+                                    r2 = 25
+                                    x11 = dwidth/63
+                                    x21 = dwidth/1.021
+                                    y11 = dheight/2.8
+                                    y21 = dheight/0.6
+
+
+                                    dcanvas.coords("poly2",x11 + r2,y11,
+                                    x11 + r2,y11,
+                                    x21 - r2,y11,
+                                    x21 - r2,y11,     
+                                    x21,y11,     
+                                    #--------------------
+                                    x21,y11 + r2,     
+                                    x21,y11 + r2,     
+                                    x21,y21 - r2,     
+                                    x21,y21 - r2,     
+                                    x21,y21,
+                                    #--------------------
+                                    x21 - r2,y21,     
+                                    x21 - r2,y21,     
+                                    x11 + r2,y21,
+                                    x11 + r2,y21,
+                                    x11,y21,
+                                    #--------------------
+                                    x11,y21 - r2,
+                                    x11,y21 - r2,
+                                    x11,y11 + r2,
+                                    x11,y11 + r2,
+                                    x11,y11,
+                                    )
+
+                                    dcanvas.coords("label1",dwidth/2,dheight/8.24)
+                                    dcanvas.coords("label2",dwidth/6,dheight/2.4)
+                                    dcanvas.coords("label3",dwidth/8.2,dheight/2)
+                                    dcanvas.coords("label4",dwidth/2.8,dheight/2)
+                                    dcanvas.coords("label5",dwidth/1.7,dheight/2)
+                                    dcanvas.coords("label6",dwidth/8.2,dheight/1.66)
+                                    dcanvas.coords("label7",dwidth/2.8,dheight/1.66)
+                                    dcanvas.coords("label8",dwidth/8.2,dheight/1.42)
+                                    dcanvas.coords("label9",dwidth/2.8,dheight/1.42)
+                                    dcanvas.coords("label10",dwidth/1.7,dheight/1.42)
+                                    dcanvas.coords("label11",dwidth/8.2,dheight/1.24)
+                                    dcanvas.coords("label12",dwidth/2.8,dheight/1.24)
+                                    dcanvas.coords("label13",dwidth/1.7,dheight/1.24)
+                                    dcanvas.coords("label14",dwidth/5.97,dheight/1.09)
+                                    dcanvas.coords("label15",dwidth/8.2,dheight/0.98)
+                                    dcanvas.coords("label16",dwidth/1.71,dheight/0.98)
+                                    dcanvas.coords("label17",dwidth/1.58,dheight/1.09)
+                                    dcanvas.coords("label18",dwidth/8.2,dheight/0.824)
+                                    dcanvas.coords("label19",dwidth/2.62,dheight/0.824)
+                                    dcanvas.coords("label20",dwidth/1.7,dheight/0.824)
+                                    dcanvas.coords("label21",dwidth/1.185,dheight/0.824)
+                                    dcanvas.coords("label22",dwidth/8.2,dheight/0.76)
+                                    dcanvas.coords("label23",dwidth/2.62,dheight/0.76)
+                                    dcanvas.coords("label24",dwidth/1.7,dheight/0.76)
+                                    dcanvas.coords("label25",dwidth/1.185,dheight/0.76)
+                                    dcanvas.coords("label26",dwidth/1.28,dheight/1.087)
+                                    dcanvas.coords("label27",dwidth/6.3,dheight/0.699)
+
+                                    dcanvas.coords("line1",dwidth/21,dheight/2.2,dwidth/1.055,dheight/2.2)
+
+                                    dcanvas.coords("combo1",dwidth/20,dheight/1.9)
+                                    dcanvas.coords("combo2",dwidth/20,dheight/1.37)
+
+                                    dcanvas.coords("entry2",dwidth/3.52,dheight/1.9)
+                                    dcanvas.coords("entry3",dwidth/1.94,dheight/1.9)
+                                    dcanvas.coords("entry4",dwidth/20,dheight/1.6)
+                                    dcanvas.coords("entry5",dwidth/3.52,dheight/1.6)
+                                    dcanvas.coords("entry6",dwidth/3.52,dheight/1.38)
+                                    dcanvas.coords("entry7",dwidth/1.94,dheight/1.38)
+                                    dcanvas.coords("entry8",dwidth/20,dheight/1.21)
+                                    dcanvas.coords("entry9",dwidth/3.52,dheight/1.21)
+                                    dcanvas.coords("entry10",dwidth/1.94,dheight/1.21)
+                                    dcanvas.coords("entry11",dwidth/20,dheight/0.96)
+                                    dcanvas.coords("entry12",dwidth/1.95,dheight/0.96)
+                                    dcanvas.coords("entry13",dwidth/20,dheight/0.81)
+                                    dcanvas.coords("entry14",dwidth/3.23,dheight/0.81)
+                                    dcanvas.coords("entry15",dwidth/1.94,dheight/0.81)
+                                    dcanvas.coords("entry16",dwidth/1.296,dheight/0.81)
+                                    dcanvas.coords("entry17",dwidth/20,dheight/0.749)
+                                    dcanvas.coords("entry18",dwidth/3.23,dheight/0.749)
+                                    dcanvas.coords("entry19",dwidth/1.94,dheight/0.749)
+                                    dcanvas.coords("entry20",dwidth/1.296,dheight/0.749)
+
+                                    dcanvas.coords("check1",dwidth/1.45,dheight/1.11)
+                                    dcanvas.coords("check2",dwidth/20,dheight/0.71)
+
+                                    dcanvas.coords("button1",dwidth/2,dheight/0.655)
+                                    dcanvas.coords("button2",dwidth/27,dheight/3)
+
+                                sr_Canvas_2 = Canvas(sr_Frame_2,bg='#2f516f',scrollregion=(0,0,700,1200))
+
+                                sr_Frame_2.grid_columnconfigure(0,weight=1)
+                                sr_Frame_2.grid_rowconfigure(0,weight=1)
+
+                                sr_Scroll_2 = Scrollbar(sr_Frame_2,orient=VERTICAL)
+                                sr_Scroll_2.grid(row=0,column=1,sticky='ns')
+                                sr_Scroll_2.config(command=sr_Canvas_2.yview)
+                                sr_Canvas_2.bind("<Configure>", responsive_widgets2)
+                                sr_Canvas_2.config(yscrollcommand=sr_Scroll_2.set)
+                                sr_Canvas_2.grid(row=0,column=0,sticky='nsew')
+
+                                sr_Canvas_2.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("poly1"))
+                                cust_label1 = Label(sr_Canvas_2,width=18,height=1,text="ADD CUSTOMER",font=('arial 25'),background='#1b3857',fg="white")
+                                sr_Canvas_2.create_window(0,0,anchor="c",window=cust_label1,tags=("label1"))
+                                sr_Canvas_2.create_line(0,0,0,0,fill='gray',width=1,tags=("hline"))
+
+                                sr_Canvas_2.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("poly2"))
+
+                                cust_label2 = Label(sr_Canvas_2,width=20,height=1,text="Customer Information",font=('arial 18 bold'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label2,tags=('label2'))
+
+                                sr_Canvas_2.create_line(0,0,0,0,fill='gray',width=1,tags=("line1"))
+
+                                cust_label3 = Label(sr_Canvas_2,width=20,height=1,text="Title",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label3,tags=('label3'))
+
+                                cust_title = ttk.Combobox(sr_Canvas_2,width=19,font=('arial 15'))
+                                cust_title['values'] = ['Mr','Mrs','Miss','Ms',]
+                                cust_title.current(0)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_title,tags=("combo1"))
+
+                                cust_label4 = Label(sr_Canvas_2,width=20,height=1,text="First name",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label4,tags=('label4'))
+
+                                cust_fname = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_fname,tags=("entry2"))
+
+                                cust_label5 = Label(sr_Canvas_2,width=20,height=1,text="Last name",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label5,tags=('label5'))
+
+                                cust_lname = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_lname,tags=("entry3"))
+
+                                cust_label6 = Label(sr_Canvas_2,width=20,height=1,text="Company",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label6,tags=('label6'))
+
+                                cust_company = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_company,tags=("entry4"))
+
+                                cust_label7 = Label(sr_Canvas_2,width=20,height=1,text="Location",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label7,tags=('label7'))
+
+                                cust_location = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_location,tags=("entry5"))
+
+                                cust_label8 = Label(sr_Canvas_2,width=20,height=1,text="GST type",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label8,tags=('label8'))
+
+                                def select_GSTtype(event):
+                                    if cust_gtype.get() == 'GST unregistered' or cust_gtype.get() == 'Consumer' or cust_gtype.get() == 'Overseas':
+                                        sr_Canvas_2.itemconfig("label9",state='hidden')
+                                        sr_Canvas_2.itemconfig("entry6",state='hidden')
+                                    else:
+                                        sr_Canvas_2.itemconfig("label9",state='normal')
+                                        sr_Canvas_2.itemconfig("entry6",state='normal')
+
+                                cust_gtype = ttk.Combobox(sr_Canvas_2,width=19,font=('arial 15'))
+                                cust_gtype['values'] = ['Choose...','GST registered- Regular','GST registered- Composition','GST unregistered','Consumer','Overseas','SEZ',"Deemed exports - EOU's STP's EHTP's etc"]
+                                cust_gtype.current(0)
+                                cust_gtype.bind("<<ComboboxSelected>>",select_GSTtype)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_gtype,tags=("combo2"))
+
+                                cust_label9 = Label(sr_Canvas_2,width=20,height=1,text="GSTIN",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label9,tags=('label9'))
+
+                                gstinVar = StringVar()
+                                cust_gin = Entry(sr_Canvas_2,textvariable=gstinVar,width=20,font=('arial 15'),background='#2f516f',foreground='grey')
+                                cust_gin.insert(0,'29APPCK7465F1Z1')
+
+                                def del_placeholder(event):
+                                    if cust_gin.get() == '29APPCK7465F1Z1':
+                                        cust_gin.delete(0,END)
+                                        cust_gin.config(fg="white")
+                                    else:
+                                        pass
+
+                                cust_gin.bind("<FocusIn>",del_placeholder)
+
+                                def ret_placeholder(event):
+                                    if cust_gin.get() == '':
+                                        cust_gin.insert(0,'29APPCK7465F1Z1')
+                                        cust_gin.config(fg="grey")
+                                    else:
+                                        pass
+                                cust_gin.bind("<FocusOut>",ret_placeholder)
+                                
+                                def validate_gstin(value):
+                                    pattern = r'[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[a-zA-Z]{1}[0-9a-zA-Z]{1}'
+                                    if re.fullmatch(pattern,value) is None:
+                                        return False
+                                    else:
+                                        cust_gin.config(fg="white")
+                                        return True
+
+                                def invalid_gstin():
+                                    cust_gin.config(fg="red")
+
+                                valid_cmndGSTIN = (sr_Canvas_2.register(validate_gstin),'%P')
+                                invalid_cmndGSTIN = (sr_Canvas_2.register(invalid_gstin),)
+                                cust_gin.config(validate='focusout',validatecommand=valid_cmndGSTIN,invalidcommand=invalid_cmndGSTIN)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_gin,tags=("entry6"))
+
+                                cust_label10 = Label(sr_Canvas_2,width=20,height=1,text="PAN NO",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label10,tags=('label10'))
+
+                                panVar = StringVar()
+                                cust_pan = Entry(sr_Canvas_2,width=20,textvariable=panVar,font=('arial 15'),background='#2f516f',foreground='grey')
+                                cust_pan.insert(0,'APPCK7465F')
+
+                                def del_placeholder(event):
+                                    if cust_pan.get() == 'APPCK7465F':
+                                        cust_pan.delete(0,END)
+                                        cust_pan.config(fg="white")
+                                    else:
+                                        pass
+
+                                cust_pan.bind("<FocusIn>",del_placeholder)
+
+                                def ret_placeholder(event):
+                                    if cust_pan.get() == '':
+                                        cust_pan.insert(0,'APPCK7465F')
+                                        cust_pan.config(fg="grey")
+                                    else:
+                                        pass
+                                cust_pan.bind("<FocusOut>",ret_placeholder)
+
+                                def validate_pan(value):
+                                    pattern = r'[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}'
+                                    if re.fullmatch(pattern,value) is None:
+                                        return False
+                                    else:
+                                        cust_pan.config(fg="white")
+                                        return True
+
+                                def invalid_pan():
+                                    cust_pan.config(fg="red")
+
+                                valid_cmndPAN = (sr_Canvas_2.register(validate_pan),'%P')
+                                invalid_cmndPAN = (sr_Canvas_2.register(invalid_pan),)
+                                cust_pan.config(validate='focusout',validatecommand=valid_cmndPAN,invalidcommand=invalid_cmndPAN)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_pan,tags=("entry7"))
+
+                                cust_label11 = Label(sr_Canvas_2,width=20,height=1,text="Email",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label11,tags=('label11'))
+
+                                emailVar = StringVar()
+                                cust_email = Entry(sr_Canvas_2,textvariable=emailVar,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+
+                                def validate_email(value):
+                                    pattern = r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+                                    if re.fullmatch(pattern,value) is None:
+                                        return False
+                                    else:
+                                        cust_email.config(fg="white")
+                                        return True
+
+                                def invalid_email():
+                                    cust_email.config(fg="red")
+
+                                valid_cmndEMAIL = (sr_Canvas_2.register(validate_email),'%P')
+                                invalid_cmndEMAIL = (sr_Canvas_2.register(invalid_email),)
+                                cust_email.config(validate='focusout',validatecommand=valid_cmndEMAIL,invalidcommand=invalid_cmndEMAIL)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_email,tags=("entry8"))
+
+                                cust_label12 = Label(sr_Canvas_2,width=20,height=1,text="Website",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label12,tags=('label12'))
+
+                                webVar = StringVar()
+                                cust_web = Entry(sr_Canvas_2,textvariable=webVar,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+
+                                def validate_web(value):
+                                    pattern = r'www.+[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}'
+                                    if re.fullmatch(pattern,value) is None:
+                                        return False
+                                    else:
+                                        cust_web.config(fg="white")
+                                        return True
+
+                                def invalid_web():
+                                    cust_web.config(fg="red")
+
+                                valid_cmndWEB = (sr_Canvas_2.register(validate_web),'%P')
+                                invalid_cmndWEB = (sr_Canvas_2.register(invalid_web),)
+                                cust_web.config(validate='focusout',validatecommand=valid_cmndWEB,invalidcommand=invalid_cmndWEB)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_web,tags=("entry9"))
+
+                                cust_label13 = Label(sr_Canvas_2,width=20,height=1,text="Mobile",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label13,tags=('label13'))
+
+                                mobVar = StringVar()
+                                cust_mob = Entry(sr_Canvas_2,textvariable=mobVar,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+
+                                def validate_mobile(value):
+                                    pattern = r'[7-9][0-9]{9}'
+                                    if re.fullmatch(pattern,value) is None:
+                                        return False
+                                    else:
+                                        cust_mob.config(fg="white")
+                                        return True
+
+                                def invalid_mobile():
+                                    cust_mob.config(fg="red")
+
+                                valid_cmndMOB = (sr_Canvas_2.register(validate_mobile),'%P')
+                                invalid_cmndMOB = (sr_Canvas_2.register(invalid_mobile),)
+                                cust_mob.config(validate='focusout',validatecommand=valid_cmndMOB,invalidcommand=invalid_cmndMOB)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_mob,tags=("entry10"))
+
+                                cust_label14 = Label(sr_Canvas_2,width=20,height=1,text="Billing Address",font=('arial 18 bold'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label14,tags=('label14'))
+
+                                cust_label15 = Label(sr_Canvas_2,width=20,height=1,text="Street",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label15,tags=('label15'))
+
+                                cust_st1 = scrolledtext.ScrolledText(sr_Canvas_2,width=48,height=3,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_st1,tags=("entry11"))
+
+                                cust_label17 = Label(sr_Canvas_2,width=20,height=1,text="Shipping Address",font=('arial 18 bold'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label17,tags=('label17'))
+
+                                cust_label16 = Label(sr_Canvas_2,width=20,height=1,text="Street",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label16,tags=('label16'))
+
+                                cust_st2 = scrolledtext.ScrolledText(sr_Canvas_2,width=48,height=3,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_st2,tags=("entry12"))
+
+                                cust_label18 = Label(sr_Canvas_2,width=20,height=1,text="City",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label18,tags=('label18'))
+
+                                cust_city = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_city,tags=("entry13"))
+
+                                cust_label19 = Label(sr_Canvas_2,width=20,height=1,text="State",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label19,tags=('label19'))
+
+                                cust_state = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_state,tags=("entry14"))
+
+                                cust_label20 = Label(sr_Canvas_2,width=20,height=1,text="City",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label20,tags=('label20'))
+
+                                cust_city1 = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_city1,tags=("entry15"))
+
+                                cust_label21 = Label(sr_Canvas_2,width=20,height=1,text="State",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label21,tags=('label21'))
+
+                                cust_state1 = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_state1,tags=("entry16"))
+                                #--
+                                cust_label22 = Label(sr_Canvas_2,width=20,height=1,text="Pin Code",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label22,tags=('label22'))
+
+                                cust_pin = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_pin,tags=("entry17"))
+
+                                cust_label23 = Label(sr_Canvas_2,width=20,height=1,text="Country",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label23,tags=('label23'))
+
+                                cust_country = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_country,tags=("entry18"))
+
+                                cust_label24 = Label(sr_Canvas_2,width=20,height=1,text="Pin code",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label24,tags=('label24'))
+
+                                cust_pin1 = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_pin1,tags=("entry19"))
+
+                                cust_label25 = Label(sr_Canvas_2,width=20,height=1,text="Country",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label25,tags=('label25'))
+
+                                cust_country1 = Entry(sr_Canvas_2,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_country1,tags=("entry20"))
+
+                                def sameas_billaddress():
+                                    if sameasVar.get() == True:
+                                        bill_address = cust_st1.get("1.0","end-1c")
+                                        bill_city = cust_city.get()
+                                        bill_state = cust_state.get()
+                                        bill_pin = cust_pin.get()
+                                        bill_country = cust_country.get()
+
+                                        cust_st2.delete("1.0","end-1c")
+                                        cust_st2.insert("1.0",bill_address)
+                                        cust_city1.delete(0,END)
+                                        cust_city1.insert(0,bill_city)
+                                        cust_state1.delete(0,END)
+                                        cust_state1.insert(0,bill_state)
+                                        cust_pin1.delete(0,END)
+                                        cust_pin1.insert(0,bill_pin)
+                                        cust_country1.delete(0,END)
+                                        cust_country1.insert(0,bill_country)
+                                    else:
+                                        pass
+
+                                sameasVar = BooleanVar()
+                                cust_sameb = Checkbutton(sr_Canvas_2,variable=sameasVar,onvalue=1,offvalue=0,background='#1b3857',activebackground="#1b3857",command=sameas_billaddress)
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_sameb,tags=("check1"))
+
+                                cust_label26 = Label(sr_Canvas_2,width=20,height=1,text="Same as billing address",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label26,tags=('label26'))
+
+                                termVar = BooleanVar()
+                                cust_term = Checkbutton(sr_Canvas_2,variable=termVar,onvalue=1,offvalue=0,background='#1b3857',activebackground="#1b3857")
+                                sr_Canvas_2.create_window(0,0,anchor='nw',window=cust_term,tags=("check2"))
+
+                                cust_label27 = Label(sr_Canvas_2,width=25,height=1,text="Agree to terms and conditions",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                                sr_Canvas_2.create_window(0,0,window=cust_label27,tags=('label27'))
+
+                                def sr_create_newCustomer():
+                                    title = cust_title.get()
+                                    firstname = cust_fname.get()
+                                    lastname = cust_lname.get()
+                                    company = cust_company.get()
+                                    location = cust_location.get()
+                                    gsttype = cust_gtype.get()
+                                    gstin = gstinVar.get()
+                                    panno = panVar.get()
+                                    email = emailVar.get()
+                                    website = webVar.get()
+                                    mobile = mobVar.get()
+                                    street = cust_st1.get("1.0","end-1c")
+                                    city = cust_city.get()
+                                    state = cust_state.get()
+                                    pincode = cust_pin.get()
+                                    country = cust_country.get()
+                                    shipstreet = cust_st2.get("1.0","end-1c")
+                                    shipcity = cust_city1.get()
+                                    shipstate = cust_state1.get()
+                                    shippincode = cust_pin1.get()
+                                    shipcountry = cust_country1.get()
+
+                                    
+                                    user_sql = "SELECT id FROM auth_user WHERE username=%s"
+                                    user_val = (nm_ent.get(),)
+                                    fbcursor.execute(user_sql,user_val)
+                                    user_data = fbcursor.fetchone()
+
+                                    comp_sql = 'SELECT cid FROM app1_company WHERE id_id=%s'
+                                    comp_val = (user_data[0],)
+                                    fbcursor.execute(comp_sql,comp_val)
+                                    comp_data = fbcursor.fetchone()
+                                    cid  = comp_data[0]
+
+                                    
+                                    
+                                    if gsttype == "GST unregistered" or gsttype == "Consumer" or gsttype == "Overseas":
+                                        gstin = ''
+                                        if validate_pan(panno) is False:
+                                            pass 
+                                        elif validate_email(email) is False: 
+                                            pass
+                                        elif validate_web(website) is False:
+                                            pass 
+                                        elif validate_mobile(mobile) is False:
+                                            pass
+                                        else:
+                                            if termVar.get() == False:
+                                                pass
+                                            else:
+                                                if gsttype == "Choose...":
+                                                    pass
+                                                else:
+                                                    ins_cust_sql = "INSERT INTO app1_customer(title,firstname,lastname,company,location,gsttype,gstin,panno,email,website,mobile,street,city,state,pincode,country,shipstreet,shipcity,shipstate,shippincode,shipcountry,cid_id) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" 
+                                                    ins_cust_val = (title,firstname,lastname,company,location,gsttype,gstin,panno,email,website,mobile,street,city,state,pincode,country,shipstreet,shipcity,shipstate,shippincode,shipcountry,cid,)
+                                                    fbcursor.execute(ins_cust_sql,ins_cust_val)
+                                                    finsysdb.commit()
+                                                    sr_Frame_2.destroy()
+                                                    cust_sql = "SELECT firstname,lastname FROM app1_customer"
+                                                    fbcursor.execute(cust_sql,)
+                                                    cust_data = fbcursor.fetchall()
+
+                                                    cust_list = []
+                                                    if not cust_data:
+                                                        cust_list.append('Select Customer')
+                                                    else:
+                                                        for c in cust_data:
+                                                            cust_list.append(c[0] + " " + c[1])
+                                                        cust_list.insert(0,'Select Customer')
+                                                        es_custCombo["values"] = cust_list
+                                                    sr_Frame_1.grid(row=0,column=0,sticky='nsew')
+                                    elif gstin == '29APPCK7465F1Z1' or panno == 'APPCK7465F':
+                                        pass
+                                    else:
+                                        if validate_gstin(gstin) is False: 
+                                            pass
+                                        elif validate_pan(panno) is False:
+                                            pass 
+                                        elif validate_email(email) is False: 
+                                            pass
+                                        elif validate_web(website) is False:
+                                            pass
+                                        elif validate_mobile(mobile) is False:
+                                            pass
+                                        else:
+                                            if termVar.get() == False:
+                                                pass
+                                            else:
+                                                if gsttype == "Choose...":
+                                                    pass
+                                                else:
+                                                    ins_cust_sql = "INSERT INTO app1_customer(title,firstname,lastname,company,location,gsttype,gstin,panno,email,website,mobile,street,city,state,pincode,country,shipstreet,shipcity,shipstate,shippincode,shipcountry,cid_id) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" 
+                                                    ins_cust_val = (title,firstname,lastname,company,location,gsttype,gstin,panno,email,website,mobile,street,city,state,pincode,country,shipstreet,shipcity,shipstate,shippincode,shipcountry,cid,)
+                                                    fbcursor.execute(ins_cust_sql,ins_cust_val)
+                                                    finsysdb.commit()
+                                                    sr_Frame_2.destroy()
+                                                    cust_sql = "SELECT firstname,lastname FROM app1_customer"
+                                                    fbcursor.execute(cust_sql,)
+                                                    cust_data = fbcursor.fetchall()
+
+                                                    cust_list = []
+                                                    if not cust_data:
+                                                        cust_list.append('Select Customer')
+                                                    else:
+                                                        for c in cust_data:
+                                                            cust_list.append(c[0] + " " + c[1])
+                                                        cust_list.insert(0,'Select Customer')
+                                                        es_custCombo["values"] = cust_list
+                                                    
+                                
+                                cust_save = Button(sr_Canvas_2,text="Submit Form",font=('arial 12 bold'),width=40,height=2,background="#198fed",activebackground="#198fed",foreground="white",activeforeground="white",bd=0,command=lambda:sr_create_newCustomer())
+                                sr_Canvas_2.create_window(0,0,window=cust_save,tags=("button1"))
+
+                                def es_goBack():
+                                    sr_Frame_2.grid_forget()
+                                    
+
+                                back_btn = Button(sr_Canvas_2,text='←  Back',font=('arial 10 bold'),bd=0,activebackground='#2f516f',foreground='white',background='#2f516f',command=lambda:es_goBack())
+                                sr_Canvas_2.create_window(0,0,window=back_btn,tags=("button2"))
+
+                            es_plus = Button(sr_Canvas_1,text='+',font=('arial 10 bold'),foreground='white',activebackground='#1b3857',background='#1b3857',padx=7,command=lambda:sr_addCustomer_1())
+                            sr_Canvas_1.create_window(0,0,window=es_plus,tags=("button5"))
+
+                            es_label4 = Label(sr_Canvas_1,width=10,height=1,text="Email",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label4,tags=('label22'))
+
+                            es_email = Entry(sr_Canvas_1,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=es_email,tags=("entry13"))
+
+                            es_label5 = Label(sr_Canvas_1,width=20,height=1,text="Billing Address",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label5,tags=('label23'))
+
+                            es_baddress = Text(sr_Canvas_1,width=20,font=('arial 15'),height=7,background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=es_baddress,tags=("entry14"))
+
+                            es_label7 = Label(sr_Canvas_1,width=20,height=1,text="Place of Supply",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label7,tags=('label25'))
+
+                            es_pofsupply = Entry(sr_Canvas_1,width=20,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=es_pofsupply,tags=("entry15"))
+
+                            es_label7 = Label(sr_Canvas_1,width=20,height=1,text="Reference Number",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label7,tags=('label25ref'))
+                            
+                            est_entry_ref = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')                           
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry_ref,tags=("entry87ref"))
+
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line17"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line18"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line19"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line20"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line21"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line22"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line23"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line24"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line25"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line26"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line27"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line28"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line29"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line81"))
+                            sr_Canvas_1.create_line(0, 0, 0, 0, fill='gray',width=1,tags=("line82"))
+
+                            
+
+                            es_label13 = Label(sr_Canvas_1,width=3,height=1,text="#",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label13,tags=('label31'))
+
+                            es_label14 = Label(sr_Canvas_1,width=3,height=1,text="1",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label14,tags=('label32'))
+
+                            es_label29 = Label(sr_Canvas_1,width=3,height=1,text="2",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label29,tags=('label64'))
+
+                            es_label30 = Label(sr_Canvas_1,width=3,height=1,text="3",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label30,tags=('label65'))
+
+                            es_label31 = Label(sr_Canvas_1,width=3,height=1,text="4",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label31,tags=('label66'))
+
+                            es_label18 = Label(sr_Canvas_1,width=15,height=1,text="Product / Service",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label18,tags=('label33'))
+
+                            es_label19 = Label(sr_Canvas_1,width=10,height=1,text="HSN",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label19,tags=('label34'))
+
+                            es_label20 = Label(sr_Canvas_1,width=18,height=1,text="Description",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label20,tags=('label35'))
+
+                            es_label21 = Label(sr_Canvas_1,width=10,height=1,text="Qty",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label21,tags=('label36'))
+
+                            es_label22 = Label(sr_Canvas_1,width=10,height=1,text="Price",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label22,tags=('label86'))
+
+                            es_label23 = Label(sr_Canvas_1,width=10,height=1,text="Total",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label23,tags=('label87'))
+
+                            es_label24 = Label(sr_Canvas_1,width=10,height=1,text="Tax (%)",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label24,tags=('label88'))
+
+                            user_sql = "SELECT id FROM auth_user WHERE username=%s"
+                            user_val = (nm_ent.get(),)
+                            fbcursor.execute(user_sql,user_val)
+                            user_data = fbcursor.fetchone()
+
+                            comp_sql = 'SELECT * FROM app1_company WHERE id_id=%s'
+                            comp_val = (user_data[0],)
+                            fbcursor.execute(comp_sql,comp_val)
+                            comp_data = fbcursor.fetchone()
+
+                            get_inventory_sql = "SELECT * FROM app1_inventory WHERE cid_id=%s" 
+                            get_inventory_val = (comp_data[0],)                      
+                            fbcursor.execute(get_inventory_sql,get_inventory_val)
+                            get_inventory_data = fbcursor.fetchall()
+
+                            get_noninventory_sql = "SELECT * FROM app1_noninventory WHERE cid_id=%s" 
+                            get_noninventory_val = (comp_data[0],)                      
+                            fbcursor.execute(get_noninventory_sql,get_noninventory_val)
+                            get_noninventory_data = fbcursor.fetchall()
+
+                            get_bundle_sql = "SELECT * FROM app1_bundle WHERE cid_id=%s" 
+                            get_bundle_val = (comp_data[0],)                      
+                            fbcursor.execute(get_bundle_sql,get_bundle_val)
+                            get_bundle_data = fbcursor.fetchall()
+
+                            product_list = []
+
+                            if not get_inventory_data:
+                                pass
+                            else:
+                                for i in get_inventory_data:
+                                    product_list.append(i[2])
+
+                            if not get_noninventory_data:
+                                pass
+                            else:
+                                for n in get_noninventory_data:
+                                    product_list.append(n[2])
+
+                            if not get_bundle_data:
+                                pass
+                            else:
+                                for b in get_bundle_data:
+                                    product_list.append(b[2])
+                            
+                            # product_list.insert(0,"Select Product")
+
+                            def es_fetch_proDetails1(event):
+                                pass
+
+                            est_entry1 = ttk.Combobox(sr_Canvas_1,width=10,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry1['values'] = product_list
+                            est_entry1.current(0)
+                            est_entry1.bind("<<ComboboxSelected>>",es_fetch_proDetails1)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry1,tags=("combo5"))
+
+                            est_entry2 = Entry(sr_Canvas_1,width=9,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry2,tags=("entry73"))
+
+                            est_entry3 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry3,tags=("entry74"))
+
+                            def est_calculateTotal1(event,s):
+                                pass
+
+                            est_entry4 = Spinbox(sr_Canvas_1,from_=0,to=100,width=7,font=('arial 15'),background='#2f516f',foreground='white',justify=RIGHT)
+                            est_entry4.bind("<Key>",lambda event,sp = 1:est_calculateTotal1(event,sp))
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry4,tags=("entry75"))
+
+                            est_entry5 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry5,tags=("entry76"))
+
+                            est_entry6 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            est_entry6.delete(0,END)
+                            est_entry6.insert(0,0)
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry6,tags=("entry77"))
+                            def calcu_cmd(event):
+                                pass
+                                    
+                            est_entry7 = ttk.Combobox(sr_Canvas_1,width=11,font=('arial 15'),background='#2f516f',foreground='black')
+                            cplace_gstlist = ['Choose','28.0% GST(28%)','18.0% GST(18%)','12.0% GST(12%)','06.0% GST(06%)',
+                                '05.0% GST(05%)','03.0% GST(03%)','0.25% GST(0.25%)','0.0% GST(0%)','Exempt GST(0%)','Out of Scope(0%)']
+                            est_entry7['values'] = cplace_gstlist
+                            est_entry7.current(0)
+                            est_entry7.bind('<<ComboboxSelected>>',calcu_cmd)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry7,tags=("combo28"))
+
+                            def es_fetch_proDetails2(event):
+                                pass
+
+                            est_entry11 = ttk.Combobox(sr_Canvas_1,width=10,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry11['values'] = product_list
+                            est_entry11.current(0)
+                            est_entry11.bind("<<ComboboxSelected>>",es_fetch_proDetails2)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry11,tags=("combo14"))
+
+                            est_entry12 = Entry(sr_Canvas_1,width=9,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry12,tags=("entry78"))
+
+                            est_entry13 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry13,tags=("entry79"))
+
+                            est_entry14 = Spinbox(sr_Canvas_1,from_=0,to=100,width=7,font=('arial 15'),background='#2f516f',foreground='white',justify=RIGHT)
+                            est_entry14.bind("<Key>",lambda event,sp = 2:est_calculateTotal1(event,sp))
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry14,tags=("entry80"))
+
+                            est_entry15 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry15,tags=("entry81"))
+
+                            est_entry16 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            est_entry16.delete(0,END)
+                            est_entry16.insert(0,0)
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry16,tags=("entry82"))
+
+                            est_entry17 = ttk.Combobox(sr_Canvas_1,width=11,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry17['values'] = cplace_gstlist
+                            est_entry17.current(0)
+                            est_entry17.bind('<<ComboboxSelected>>',calcu_cmd)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry17,tags=("combo29"))
+
+                            def es_fetch_proDetails3(event):
+                                try:
+                                    get_pro_sql = "SELECT * FROM app1_inventory WHERE name=%s AND cid_id=%s"
+                                    get_pro_val = (est_entry18.get(),comp_data[0])
+                                    fbcursor.execute(get_pro_sql,get_pro_val)
+                                    get_pro_data = fbcursor.fetchone()
+                                except:
+                                    pass
+
+                                try:
+                                    get_pro_sql1 = "SELECT * FROM app1_noninventory WHERE name=%s AND cid_id=%s"
+                                    get_pro_val1 = (est_entry18.get(),comp_data[0])
+                                    fbcursor.execute(get_pro_sql1,get_pro_val1)
+                                    get_pro_data1 = fbcursor.fetchone()
+                                except:
+                                    pass
+
+                                try:
+                                    get_pro_sql3 = "SELECT * FROM app1_bundle WHERE name=%s AND cid_id=%s"
+                                    get_pro_val3 = (est_entry18.get(),comp_data[0])
+                                    fbcursor.execute(get_pro_sql3,get_pro_val3)
+                                    get_pro_data3 = fbcursor.fetchone()
+                                except:
+                                    pass
+
+                                #--------------------------------------------------------
+                                if get_pro_data is not None:
+                                    try:
+                                        sr_Canvas_1.itemconfig("label69",state='normal')
+                                        es_label34.config(text="Available Qty : " + get_pro_data[7])
+                                        est_entry19.delete(0,END)
+                                        est_entry19.insert(0,get_pro_data[4])
+                                        est_entry20.delete(0,END)
+                                        est_entry20.insert(0,get_pro_data[11])
+                                        est_entry22.delete(0,END)
+                                        est_entry22.insert(0,get_pro_data[12])
+                                    except:
+                                        pass
+                                elif get_pro_data1 is not None:
+                                    try:
+                                        sr_Canvas_1.itemconfig("label69",state='normal')
+                                        es_label34.config(text="Available Qty : " + get_pro_data1[17])
+                                        est_entry19.delete(0,END)
+                                        est_entry19.insert(0,get_pro_data1[4])
+                                        est_entry20.delete(0,END)
+                                        est_entry20.insert(0,get_pro_data1[7])
+                                        est_entry22.delete(0,END)
+                                        est_entry22.insert(0,get_pro_data1[8])
+                                    except:
+                                        pass
+                                else:
+                                    try:
+                                        sr_Canvas_1.itemconfig("label69",state='hidden')
+                                        est_entry19.delete(0,END)
+                                        est_entry19.insert(0,get_pro_data3[3])
+                                        est_entry20.delete(0,END)
+                                        est_entry20.insert(0,get_pro_data3[4])
+                                        est_entry22.delete(0,END)
+                                        est_entry22.insert(0,get_pro_data3[33])
+                                    except:
+                                        pass
+
+                            est_entry18 = ttk.Combobox(sr_Canvas_1,width=10,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry18['values'] = product_list
+                            est_entry18.current(0)
+                            est_entry18.bind("<<ComboboxSelected>>",es_fetch_proDetails3)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry18,tags=("combo16"))
+
+                            est_entry19 = Entry(sr_Canvas_1,width=9,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry19,tags=("entry83"))
+
+                            est_entry20 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry20,tags=("entry84"))
+
+                            est_entry21 = Spinbox(sr_Canvas_1,from_=0,to=100,width=7,font=('arial 15'),background='#2f516f',foreground='white',justify=RIGHT)
+                            est_entry21.bind("<Key>",lambda event,sp = 3:est_calculateTotal1(event,sp))
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry21,tags=("entry85"))
+
+                            est_entry22 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry22,tags=("entry86"))
+
+                            est_entry23 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            est_entry23.delete(0,END)
+                            est_entry23.insert(0,0)
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry23,tags=("entry87"))
+
+                            est_entry24 = ttk.Combobox(sr_Canvas_1,width=11,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry24['values'] = cplace_gstlist
+                            est_entry24.current(0)
+                            est_entry24.bind('<<ComboboxSelected>>',calcu_cmd)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry24,tags=("combo30"))
+
+                            def es_fetch_proDetails4(event):
+                                try:
+                                    get_pro_sql = "SELECT * FROM app1_inventory WHERE name=%s AND cid_id=%s"
+                                    get_pro_val = (est_entry25.get(),comp_data[0])
+                                    fbcursor.execute(get_pro_sql,get_pro_val)
+                                    get_pro_data = fbcursor.fetchone()
+                                except:
+                                    pass
+
+                                try:
+                                    get_pro_sql1 = "SELECT * FROM app1_noninventory WHERE name=%s AND cid_id=%s"
+                                    get_pro_val1 = (est_entry25.get(),comp_data[0])
+                                    fbcursor.execute(get_pro_sql1,get_pro_val1)
+                                    get_pro_data1 = fbcursor.fetchone()
+                                except:
+                                    pass
+
+                                try:
+                                    get_pro_sql3 = "SELECT * FROM app1_bundle WHERE name=%s AND cid_id=%s"
+                                    get_pro_val3 = (est_entry25.get(),comp_data[0])
+                                    fbcursor.execute(get_pro_sql3,get_pro_val3)
+                                    get_pro_data3 = fbcursor.fetchone()
+                                except:
+                                    pass
+
+                                #--------------------------------------------------------
+                                if get_pro_data is not None:
+                                    try:
+                                        sr_Canvas_1.itemconfig("label70",state='normal')
+                                        es_label35.config(text="Available Qty : " + get_pro_data[7])
+                                        est_entry26.delete(0,END)
+                                        est_entry26.insert(0,get_pro_data[4])
+                                        est_entry27.delete(0,END)
+                                        est_entry27.insert(0,get_pro_data[11])
+                                        est_entry29.delete(0,END)
+                                        est_entry29.insert(0,get_pro_data[12])
+                                    except:
+                                        pass
+                                elif get_pro_data1 is not None:
+                                    try:
+                                        sr_Canvas_1.itemconfig("label70",state='normal')
+                                        es_label35.config(text="Available Qty : " + get_pro_data1[17])
+                                        est_entry26.delete(0,END)
+                                        est_entry26.insert(0,get_pro_data1[4])
+                                        est_entry27.delete(0,END)
+                                        est_entry27.insert(0,get_pro_data1[7])
+                                        est_entry29.delete(0,END)
+                                        est_entry29.insert(0,get_pro_data1[8])
+                                    except:
+                                        pass
+                                else:
+                                    try:
+                                        sr_Canvas_1.itemconfig("label70",state='hidden')
+                                        est_entry26.delete(0,END)
+                                        est_entry26.insert(0,get_pro_data3[3])
+                                        est_entry27.delete(0,END)
+                                        est_entry27.insert(0,get_pro_data3[4])
+                                        est_entry29.delete(0,END)
+                                        est_entry29.insert(0,get_pro_data3[33])
+                                    except:
+                                        pass
+
+                            est_entry25 = ttk.Combobox(sr_Canvas_1,width=10,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry25['values'] = product_list
+                            est_entry25.current(0)
+                            est_entry25.bind("<<ComboboxSelected>>",es_fetch_proDetails4)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry25,tags=("combo18"))
+
+                            est_entry26 = Entry(sr_Canvas_1,width=9,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry26,tags=("entry88"))
+
+                            est_entry27 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry27,tags=("entry89"))
+
+                            est_entry28 = Spinbox(sr_Canvas_1,from_=0,to=100,width=7,font=('arial 15'),background='#2f516f',foreground='white',justify=RIGHT)
+                            est_entry28.bind("<Key>",lambda event,sp = 4:est_calculateTotal1(event,sp))
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry28,tags=("entry90"))
+
+                            est_entry29 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry29,tags=("entry91"))
+
+                            est_entry30 = Entry(sr_Canvas_1,width=15,font=('arial 15'),background='#2f516f',foreground='white')
+                            est_entry30.delete(0,END)
+                            est_entry30.insert(0,0)
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry30,tags=("entry92"))
+
+                            est_entry31 = ttk.Combobox(sr_Canvas_1,width=11,font=('arial 15'),background='#2f516f',foreground='black')
+                            est_entry31['values'] = cplace_gstlist
+                            est_entry31.current(0)
+                            est_entry31.bind('<<ComboboxSelected>>',calcu_cmd)
+                            sr_Canvas_1.create_window(0,0,anchor='c',window=est_entry31,tags=("combo31"))
+
+                            es_label32 = Label(sr_Canvas_1,width=17,height=1,text="",font=('arial 8'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label32,state=HIDDEN,tags=('label67'))
+
+                            es_label33 = Label(sr_Canvas_1,width=17,height=1,text="",font=('arial 8'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label33,state=HIDDEN,tags=('label68'))
+
+                            es_label34 = Label(sr_Canvas_1,width=17,height=1,text="",font=('arial 8'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label34,state=HIDDEN,tags=('label69'))
+
+                            es_label35 = Label(sr_Canvas_1,width=17,height=1,text="",font=('arial 8'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label35,state=HIDDEN,tags=('label70'))
+
+                            es_label25 = Label(sr_Canvas_1,width=10,height=1,text="Sub Total",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label25,tags=('label40'))
+
+                            es_label26 = Label(sr_Canvas_1,width=10,height=1,text="CGST",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label26,tags=('label41'))
+
+                            es_label27 = Label(sr_Canvas_1,width=10,height=1,text="SGST",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label27,tags=('label42'))
+
+                            est_entry8 = Entry(sr_Canvas_1,width=24,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry8,tags=("entry23"))
+
+                            est_entry9 = Entry(sr_Canvas_1,width=24,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry9,tags=("entry24"))
+
+                            est_entry10 = Entry(sr_Canvas_1,width=24,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry10,tags=("entry25"))
+
+
+                            es_label25 = Label(sr_Canvas_1,width=10,height=1,text="TCS",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label25,tags=('label43'))
+
+                            tax_Combo = ttk.Combobox(sr_Canvas_1,width=8,font=('arial 15'))
+                            tax_Combo["values"] = "cust_list"
+                            tax_Combo.current(0)
+                            tax_Combo.bind("<<ComboboxSelected>>","es_fetch_custDetails")
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=tax_Combo,tags=("tcs_sltr"))
+
+                            es_label26 = Label(sr_Canvas_1,width=10,height=1,text="Roundoff",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label26,tags=('label44'))
+
+                            es_label27 = Label(sr_Canvas_1,height=1,text="Estimate Total",font=('arial 12'),background='#1b3857',anchor="c",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label27,tags=('label45'))
+
+
+
+                            est_entry11 = Entry(sr_Canvas_1,width=24,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry11,tags=("est_entry11"))
+
+                            est_entry12 = Entry(sr_Canvas_1,width=24,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry12,tags=("est_entry12"))
+
+                            est_entry13 = Entry(sr_Canvas_1,width=24,font=('arial 15'),background='#2f516f',foreground='white')
+                            sr_Canvas_1.create_window(0,0,anchor='nw',window=est_entry13,tags=("est_entry13"))
+
+                            
+
+                            save_btn = Button(sr_Canvas_1,text='Save',width=20,height=2,font=('arial 10 bold'),background="#198fed",activebackground="#198fed",foreground="white",activeforeground="white",bd=0,command=lambda:"es_saveEstimate()")
+                            sr_Canvas_1.create_window(0,0,window=save_btn,tags=("button7")) 
+
+                            def sr_goBack():
+                                sr_Canvas_1.grid_forget()
+                                
+
+                            back_btn = Button(sr_Canvas_1,text='←  Back',font=('arial 10 bold'),bd=0,activebackground='#2f516f',foreground='white',background='#2f516f',command=lambda:sr_goBack())
+                            sr_Canvas_1.create_window(0,0,window=back_btn,tags=("button3"))
+                            #--------------
+                            es_label6 = Label(sr_Canvas_1,width=20,height=1,text="Estimate Date",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label6,tags=('label24'))
+
+                            es_label28 = Label(sr_Canvas_1,width=20,height=1,text="Expiration Date",font=('arial 12'),background='#1b3857',anchor="w",fg="white")
+                            sr_Canvas_1.create_window(0,0,window=es_label28,tags=('label435'))
+
+                            cwidth = root.winfo_screenwidth()
+
+                            es_estdate = DateEntry(sr_Canvas_1,width=19,date_pattern="yyyy-mm-dd",font=('arial 15'),background='#2f516f',foreground='white')
+
+                            es_expdate = DateEntry(sr_Canvas_1,width=19,date_pattern="yyyy-mm-dd",font=('arial 15'),background='#2f516f',foreground='white') 
+
+                            if cwidth > 1280:
+                                sr_Canvas_1.create_window(495,442,anchor='nw',window=es_estdate,tags=("date"))
+                                sr_Canvas_1.create_window(775,442,anchor='nw',window=es_expdate,tags=("date1"))
+                            elif cwidth <= 1024:
+                                sr_Canvas_1.create_window(370,455,anchor='nw',window=es_estdate,tags=("date"))
+                                sr_Canvas_1.create_window(580,455,anchor='nw',window=es_expdate,tags=("date1"))
+                            else:
+                                sr_Canvas_1.create_window(465,407,anchor='nw',window=es_estdate,tags=("date"))
+                                sr_Canvas_1.create_window(730,407,anchor='nw',window=es_expdate,tags=("date1"))
+                            
+                        def edit_print():
+                            from reportlab.pdfgen import canvas
+                            from reportlab.lib.pagesizes import letter, inch
+                            
+                            path = filedialog.asksaveasfilename(initialdir=os.getcwd,title="Save File",filetypes=[('Pdf File', '*.pdf',)],defaultextension=".pdf")
+
+                            fileName = path
+                            documentTitle = 'Document title!'
+                            title = 'Invoices List'
+                            pdf = canvas.Canvas(fileName, pagesize=letter)
+                            pdf.setTitle(documentTitle) 
+                            pdf.save()
+                            win32api.ShellExecute(0,"",path,None,".",0) 
+                        estm_Frame.grid_rowconfigure(0,weight=1)
+                        estm_Frame.grid_columnconfigure(0,weight=1)
+
+                        estm_Scroll_1 = Scrollbar(estm_Frame,orient=VERTICAL)
+                        estm_Scroll_1.grid(row=0,column=1,sticky='ns')
+                        estm_Scroll_1.config(command=estm_Canvas_1.yview)
+                        estm_Canvas_1.bind("<Configure>", resestms)
+                        estm_Canvas_1.config(yscrollcommand=estm_Scroll_1.set)
+                        estm_Canvas_1.grid(row=0,column=0,sticky='nsew')
+                        def sr_goBack():
+                            estm_Canvas_1.grid_forget()
+                            
+
+                        back_btn = Button(estm_Canvas_1,text='←  Back',font=('arial 10 bold'),bd=0,activebackground='#2f516f',foreground='white',background='#2f516f',command=lambda:sr_goBack())
+                        estm_Canvas_1.create_window(0,0,window=back_btn,tags=("button3"))
+
+
+                        estm_Canvas_1.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("poly1"))
+
+                        estm_label = Label(estm_Canvas_1,width=15,height=1,text="ESTIMATE",font=('arial 25'),background="#1b3857",fg="white")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="c",window=estm_label,tags=("label1"))
+                        estm_Canvas_1.create_line(0,0,0,0,fill='gray',width=1,tags=("hline"))
+
+                        act_btn1 = Button(estm_Canvas_1,text='Edit',width=10,height=1,background="#198fed",activebackground="#1476c5",foreground="white",activeforeground="white",bd=0,command=edit_estim_fn)
+                        estm_Canvas_1.create_window(0,0,window=act_btn1,tags=("act_btn1")) 
+
+                        act_btn2 = Button(estm_Canvas_1,text='Delete',width=10,height=1,background="#198fed",activebackground="#1476c5",foreground="white",activeforeground="white",bd=0,command=edit_print)
+                        estm_Canvas_1.create_window(0,0,window=act_btn2,tags=("act_btn2")) 
+
+                        act_btn3 = Button(estm_Canvas_1,text='PDF/Print',width=10,height=1,background="#198fed",activebackground="#1476c5",foreground="white",activeforeground="white",bd=0,command=lambda:"rp_savePayment"())
+                        estm_Canvas_1.create_window(0,0,window=act_btn3,tags=("act_btn3")) 
+
+                        act_btn4 = ttk.Combobox(estm_Canvas_1,width=7,font=('arial 15'))
+                        act_btn4['values'] = ['Share','Edit','Delete']
+                        act_btn4.current(0)
+                        act_btn4.bind("<<ComboboxSelected>>","estm_Actions")
+                        estm_Canvas_1.create_window(0,0,window=act_btn4,tags=("act_btn4"))
+
+
+                        act_btn5 = ttk.Combobox(estm_Canvas_1,width=7,font=('arial 15'))
+                        act_btn5['values'] = ['Convert','Edit','Delete']
+                        act_btn5.current(0)
+                        act_btn5.bind("<<ComboboxSelected>>","estm_Actions")
+                        estm_Canvas_1.create_window(0,0,window=act_btn5,tags=("act_btn5"))
+
+                        estm_Canvas_1.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="white",tags=("poly2"))
                     estm_Canvas = Canvas(estm_Frame,bg='#2f516f',scrollregion=(0,0,700,1200))
 
                     estm_Frame.grid_rowconfigure(0,weight=1)
@@ -3842,7 +5583,16 @@ def main_sign_in():
                     estm_tree.heading("3",text="CUSTOMER NAME")
                     estm_tree.heading("4",text="STATUS")
                     estm_tree.heading("5",text="AMOUNT")
-                
+
+                    get_est_sql = "SELECT * FROM app1_estimate WHERE cid_id=%s"
+                    get_est_val = (comp_data[0],)
+                    fbcursor.execute(get_est_sql,get_est_val)
+                    get_est_data = fbcursor.fetchall()
+                    count=0
+                    for e in get_est_data:
+                            estm_tree.insert(parent='',index='end',values=(e[4],e[6],e[40],e[1],e[41],e[13]))
+                    count+=1
+                    estm_tree.bind('<Double-1>',row_selection)
                     estm_Canvas.create_window(0,0,window=estm_tree,anchor="nw",tags=("tree_main"))
 
                     #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Expenses Tab}
