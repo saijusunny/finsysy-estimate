@@ -52,7 +52,7 @@ from datetime import date,datetime, timedelta
 from array import *
 
 finsysdb = mysql.connector.connect(
-    host="localhost", user="root", password="", database="newfinsys", port="3306"
+    host="localhost", user="root", password="", database="finsys_sale", port="3306"
 )
 fbcursor = finsysdb.cursor(buffered=True)
 
@@ -3776,87 +3776,10 @@ def main_sign_in():
                             else:
                                 sr_Canvas_1.create_window(465,407,anchor='nw',window=es_estdate,tags=("date"))
                                 sr_Canvas_1.create_window(730,407,anchor='nw',window=es_expdate,tags=("date1"))
-
+                    #------------------------------------------------------------------------------------view area
                     def row_selection(event):
                         estm_Canvas_1= Canvas(estm_Frame,bg='#2f516f',scrollregion=(0,0,700,2000))
-                        def resestms(event):
-                            dwidth = event.width
-                            dheight = event.height
-                            dcanvas = event.widget
-                            
-
-                            r1 = 25
-                            x1 = dwidth/63
-                            x2 = dwidth/1.021
-                            y1 = dheight/14 
-                            y2 = dheight/3.505
-
-                            dcanvas.coords("poly1",x1 + r1,y1,
-                            x1 + r1,y1,
-                            x2 - r1,y1,
-                            x2 - r1,y1,     
-                            x2,y1,     
-                            #--------------------
-                            x2,y1 + r1,     
-                            x2,y1 + r1,     
-                            x2,y2 - r1,     
-                            x2,y2 - r1,     
-                            x2,y2,
-                            #--------------------
-                            x2 - r1,y2,     
-                            x2 - r1,y2,     
-                            x1 + r1,y2,
-                            x1 + r1,y2,
-                            x1,y2,
-                            #--------------------
-                            x1,y2 - r1,
-                            x1,y2 - r1,
-                            x1,y1 + r1,
-                            x1,y1 + r1,
-                            x1,y1,
-                            )
-
-                            dcanvas.coords("hline",dwidth/21,dheight/5,dwidth/1.055,dheight/5)
-                            
-                            r2 = 0
-                            x11 = dwidth/8
-                            x21 = dwidth/1.15
-                            y11 = dheight/2.8
-                            y21 = dheight/0.41
-
-
-                            dcanvas.coords("poly2",x11 + r2,y11,
-                            x11 + r2,y11,
-                            x21 - r2,y11,
-                            x21 - r2,y11,     
-                            x21,y11,     
-                            #--------------------
-                            x21,y11 + r2,     
-                            x21,y11 + r2,     
-                            x21,y21 - r2,     
-                            x21,y21 - r2,     
-                            x21,y21,
-                            #--------------------
-                            x21 - r2,y21,     
-                            x21 - r2,y21,     
-                            x11 + r2,y21,
-                            x11 + r2,y21,
-                            x11,y21,
-                            #--------------------
-                            x11,y21 - r2,
-                            x11,y21 - r2,
-                            x11,y11 + r2,
-                            x11,y11 + r2,
-                            x11,y11,
-                            )
-
-                            dcanvas.coords("label1",dwidth/2,dheight/8.24)
-                            dcanvas.coords("button3",dwidth/28,dheight/3)
-                            dcanvas.coords("act_btn1",dwidth/1.7,dheight/4)
-                            dcanvas.coords("act_btn2",dwidth/1.5,dheight/4)
-                            dcanvas.coords("act_btn3",dwidth/1.34,dheight/4)
-                            dcanvas.coords("act_btn4",dwidth/1.21,dheight/4)
-                            dcanvas.coords("act_btn5",dwidth/1.09,dheight/4)
+                        
 
                         def edit_estim_fn():
                             sr_Canvas_1 = Canvas(estm_Frame,bg='#2f516f',scrollregion=(0,0,700,2500))
@@ -5468,6 +5391,99 @@ def main_sign_in():
                             pdf.setTitle(documentTitle) 
                             pdf.save()
                             win32api.ShellExecute(0,"",path,None,".",0) 
+
+                        def resestms(event):
+                            dwidth = event.width
+                            dheight = event.height
+                            dcanvas = event.widget
+                            
+
+                            r1 = 25
+                            x1 = dwidth/63
+                            x2 = dwidth/1.021
+                            y1 = dheight/14 
+                            y2 = dheight/3.505
+
+                            dcanvas.coords("poly1",x1 + r1,y1,
+                            x1 + r1,y1,
+                            x2 - r1,y1,
+                            x2 - r1,y1,     
+                            x2,y1,     
+                            #--------------------
+                            x2,y1 + r1,     
+                            x2,y1 + r1,     
+                            x2,y2 - r1,     
+                            x2,y2 - r1,     
+                            x2,y2,
+                            #--------------------
+                            x2 - r1,y2,     
+                            x2 - r1,y2,     
+                            x1 + r1,y2,
+                            x1 + r1,y2,
+                            x1,y2,
+                            #--------------------
+                            x1,y2 - r1,
+                            x1,y2 - r1,
+                            x1,y1 + r1,
+                            x1,y1 + r1,
+                            x1,y1,
+                            )
+
+                            dcanvas.coords("hline",dwidth/21,dheight/5,dwidth/1.055,dheight/5)
+                            
+                            r2 = 0
+                            x11 = dwidth/8
+                            x21 = dwidth/1.15
+                            y11 = dheight/2.8
+                            y21 = dheight/0.41
+
+
+                            dcanvas.coords("poly2",x11 + r2,y11,
+                            x11 + r2,y11,
+                            x21 - r2,y11,
+                            x21 - r2,y11,     
+                            x21,y11,     
+                            #--------------------
+                            x21,y11 + r2,     
+                            x21,y11 + r2,     
+                            x21,y21 - r2,     
+                            x21,y21 - r2,     
+                            x21,y21,
+                            #--------------------
+                            x21 - r2,y21,     
+                            x21 - r2,y21,     
+                            x11 + r2,y21,
+                            x11 + r2,y21,
+                            x11,y21,
+                            #--------------------
+                            x11,y21 - r2,
+                            x11,y21 - r2,
+                            x11,y11 + r2,
+                            x11,y11 + r2,
+                            x11,y11,
+                            )
+
+                            dcanvas.coords("label1",dwidth/2,dheight/8.24)
+                            dcanvas.coords("button3",dwidth/28,dheight/3)
+                            dcanvas.coords("act_btn1",dwidth/1.7,dheight/4)
+                            dcanvas.coords("act_btn2",dwidth/1.5,dheight/4)
+                            dcanvas.coords("act_btn3",dwidth/1.34,dheight/4)
+                            dcanvas.coords("act_btn4",dwidth/1.21,dheight/4)
+                            dcanvas.coords("act_btn5",dwidth/1.09,dheight/4)
+
+                            #view page:
+                            dcanvas.coords("labels1",dwidth/5,dheight/2.3)
+                            dcanvas.coords("hline2",dwidth/6.8,dheight/1.8,dwidth/1.18,dheight/1.8)
+                            dcanvas.coords("labels2",dwidth/1.26,dheight/2.3)
+                            dcanvas.coords("labels3",dwidth/1.18,dheight/2)
+                            dcanvas.coords("labels4",dwidth/4,dheight/1.6)
+                            dcanvas.coords("labels4_1",dwidth/4.5,dheight/1.5)
+                            dcanvas.coords("labels4_2",dwidth/4.5,dheight/1.4)
+                            dcanvas.coords("labels5",dwidth/1.8,dheight/1.6)
+
+                            
+
+                            
                         estm_Frame.grid_rowconfigure(0,weight=1)
                         estm_Frame.grid_columnconfigure(0,weight=1)
 
@@ -5514,6 +5530,36 @@ def main_sign_in():
                         estm_Canvas_1.create_window(0,0,window=act_btn5,tags=("act_btn5"))
 
                         estm_Canvas_1.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="white",tags=("poly2"))
+
+                        #view section 
+                        labels1 = Label(estm_Canvas_1,width=15,height=1,text="Sales",font=('arial 12'),background="#198fed",fg="white")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="c",window=labels1,tags=("labels1"))
+
+                        estm_Canvas_1.create_line(0,0,0,0,fill='gray',width=1,tags=("hline2"))
+
+                        labels2 = Label(estm_Canvas_1,width=15,height=1,text="ESTIMATE",font=('arial 12'),background="#198fed",fg="white")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="c",window=labels2,tags=("labels2"))
+
+                        labels3 = Label(estm_Canvas_1,height=1,text="Estimate No. :1080",font=('arial 12'),background="white",fg="black", anchor="ne")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="ne",window=labels3,tags=("labels3"))
+
+                        labels4 = Label(estm_Canvas_1,height=1,text="From:",font=('arial 12'),background="white",fg="black", anchor="ne")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="ne",window=labels4,tags=("labels4"))
+
+                        labels4_1 = Label(estm_Canvas_1,width=30,height=1,text="Infox Technologies",font=('arial 12'),background="red",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels4_1,tags=("labels4_1"))
+
+                        labels4_2 = Label(estm_Canvas_1,width=30,height=5,text="Infox Technologies\n Carinival Infopark\n first floor' Kakkanad,\n ernakulam\n Kerala,682020",font=('arial 12'),background="red",fg="black",justify=LEFT)
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels4_2,tags=("labels4_2"))
+
+
+                        labels5 = Label(estm_Canvas_1,height=1,text="To:",font=('arial 12'),background="white",fg="black", anchor="ne")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="ne",window=labels5,tags=("labels5"))
+
+
+
+
+                    
                     estm_Canvas = Canvas(estm_Frame,bg='#2f516f',scrollregion=(0,0,700,1200))
 
                     estm_Frame.grid_rowconfigure(0,weight=1)
