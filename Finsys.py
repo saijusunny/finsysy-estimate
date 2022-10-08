@@ -51,6 +51,15 @@ from datetime import date,datetime, timedelta
 
 from array import *
 
+from reportlab.lib import colors
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib.pagesizes import letter  #inch
+import win32api
+from textwrap import wrap
+
+
 finsysdb = mysql.connector.connect(
     host="localhost", user="root", password="", database="finsys_sale", port="3306"
 )
@@ -70,6 +79,25 @@ root.iconphoto(False, p1)
 pro_pic =PIL.Image.open("profilepic\propic.jpg")
 # resized_pro_pic= pro_pic.resize((170,170))
 prof_pics=ImageTk.PhotoImage(pro_pic)
+
+selectall = PhotoImage(file="images/table_select_all.png")
+cut = PhotoImage(file="images/cut.png")
+copy = PhotoImage(file="images/copy.png")
+paste = PhotoImage(file="images/paste.png")
+
+undo = PhotoImage(file="images/undo.png")
+redo = PhotoImage(file="images/redo.png")
+bold = PhotoImage(file="images/bold.png")
+
+italics = PhotoImage(file="images/italics.png")
+underline = PhotoImage(file="images/underline.png")
+left = PhotoImage(file="images/left.png")
+  
+right = PhotoImage(file="images/right.png")
+center = PhotoImage(file="images/center.png")
+hyperlink = PhotoImage(file="images/hyperlink.png")
+remove = PhotoImage(file="images/eraser.png")
+color = PhotoImage(file="images/font_color.png")
 
 
 
@@ -5377,6 +5405,414 @@ def main_sign_in():
                             else:
                                 sr_Canvas_1.create_window(465,407,anchor='nw',window=es_estdate,tags=("date"))
                                 sr_Canvas_1.create_window(730,407,anchor='nw',window=es_expdate,tags=("date1"))
+
+                        #--------------------------------------------------------------------Email Function
+
+                        def rp_send_mails():
+
+                            rp_sender_email = "saijuinfox@gmail.com"    
+                            rp_sender_password = "eywcinveepcwchnn" 
+
+                            rp_server = smtplib.SMTP('smtp.gmail.com', 587)
+                            
+                            rp_server.starttls()
+
+                            rp_server.login(rp_sender_email, rp_sender_password)
+
+                            
+                            rp_carbcopy_info = rp_carcopyem_address.get()
+                            
+
+                            
+                            rp_msg = MIMEMultipart()
+                            rp_msg['Subject'] = rp_email_subject.get() 
+                            
+                            rp_mail_content  = rp_mframe.get('1.0','end-1c') 
+                            rp_msg['From'] = rp_email_from.get()
+                            rp_msg['To'] = rp_email_address.get()
+                            
+                                
+                            rp_gettingimg=rp_lstfrm.get()
+                            rp_lst_data = rp_gettingimg[1:-1].split(',')
+
+
+                            rp_msg.attach(MIMEText(rp_mail_content, 'plain'))
+
+                            for i in rp_lst_data:
+                                if len(i.strip()[1:-1])>1:
+
+                                    with open('images/'+ i.strip()[1:-1], "rb") as attachment:
+                            
+                                        rp_part = MIMEBase("application", "octet-stream")
+                                        rp_part.set_payload(attachment.read())
+
+                                        encoders.encode_base64(rp_part)
+                                        rp_part.add_header('Content-Disposition', "attachment; filename= %s" % 'images/'+ i.strip()[1:-1]) 
+
+                            
+                                        rp_msg.attach(rp_part)
+                                
+
+                            rp_server.sendmail(rp_email_from.get(),rp_email_address.get(),rp_msg.as_string())
+                            rp_server.sendmail(rp_email_from.get(), rp_carbcopy_info,rp_msg.as_string()) 
+
+                        def rp_empsfile_image(event):
+                                global rp_yawn
+                                for i in rp_htcodeframe.curselection():
+                                    print("hloo",rp_htcodeframe.get(i))
+                                    rp_yawn=rp_htcodeframe.get(i)        
+                                    edit_window_img = Toplevel()
+                                    edit_window_img.title("View Image")
+                                    edit_window_img.geometry("700x500")
+                                    image = Image.open("images/"+rp_yawn)
+                                    resize_image = image.resize((700, 500))
+                                    image = ImageTk.PhotoImage(resize_image)
+                                    rp_psimage = Label(edit_window_img,image=image)
+                                    rp_psimage.photo = image
+                                    rp_psimage.pack()
+
+
+                        def op_file(event):
+                            win32api.ShellExecute(0,"",rp_filenamez,None,".",0)
+                            
+
+                        def rp_UploadAction(event=None):
+                                global rp_filenamez
+                                rp_filenamez = askopenfilename(filetypes=(('PDF', '*.pdf',),("png file ",'.png'),("jpg file", ".jpg"),  ("All files", "*.*"),))
+                                shutil.copyfile(rp_filenamez, os.getcwd()+'/images/'+rp_filenamez.split('/')[-1])
+                                rp_htcodeframe.insert(0, rp_filenamez.split('/')[-1])
+                                
+                            
+                        def rp_addemail_order(event):
+
+                                rp_emailnow = fbcursor.fetchone()
+                                rp_mailDetail=Toplevel()
+                                rp_mailDetail.title("Send E-mail")
+                                rp_mailDetail.geometry("1080x550")
+                                rp_mailDetail.resizable(False, False)
+
+                                
+                                rp_email_Notebook = ttk.Notebook(rp_mailDetail)
+                                rp_email_Frame = Frame(rp_email_Notebook, height=500, width=1080)
+                                rp_account_Frame = Frame(rp_email_Notebook, height=550, width=1080)
+                                rp_email_Notebook.add(rp_email_Frame, text="E-mail")
+                                rp_email_Notebook.add(rp_account_Frame, text="Account")
+                                rp_email_Notebook.place(x=0, y=0)
+
+                                rp_messagelbframe=LabelFrame(rp_email_Frame,text="Message", height=500, width=730)
+                                rp_messagelbframe.place(x=5, y=5)
+                                global rp_email_address, rp_email_subject, rp_email_from,rp_email_pswrd,rp_carcopyem_address,rp_mframe,rp_htcodeframe,rp_lstfrm,rp_langs
+                                rp_email_address = StringVar() 
+                                rp_email_subject = StringVar()
+
+                                rp_email_from = StringVar()
+                                rp_email_pswrd = StringVar()
+                                rp_carcopyem_address = StringVar()
+
+                                rp_lbl_emailtoaddr=Label(rp_messagelbframe, text="Email to address").place(x=5, y=5)
+                                rp_emailtoent=Entry(rp_messagelbframe, width=50,textvariable=rp_email_address)
+                                rp_emailtoent.place(x=120, y=5)
+                                
+                                rp_sendemail_btn=Button(rp_messagelbframe, text="Send Email", width=10, height=1, command=rp_send_mails).place(x=600, y=10)
+
+                                rp_lbl_carcopyto=Label(rp_messagelbframe, text="Carbon copy to").place(x=5, y=32)
+                                rp_carcopyent=Entry(rp_messagelbframe, width=50,textvariable=rp_carcopyem_address)
+                                rp_carcopyent.place(x=120, y=32)
+
+                                rp_lbl_subject=Label(rp_messagelbframe, text="Subject").place(x=5, y=59)
+                                rp_subent=Entry(rp_messagelbframe, width=50, textvariable=rp_email_subject)
+                                rp_subent.place(x=120, y=59)
+                                rp_subjectinsrt='ORD_'+str("")
+                                rp_subent.delete(0,'end')
+                                rp_subent.insert(0, rp_subjectinsrt)
+
+                                
+
+                                
+                                style = ttk.Style()
+                                style.theme_use('default')
+                                style.configure('TNotebook.Tab', background="#213b52",foreground="white", width=60)
+                                rp_mess_Notebook = ttk.Notebook(rp_messagelbframe)
+                                rp_emailmessage_Frame =Frame(rp_mess_Notebook, height=350, width=710)
+                                rp_htmlsourse_Frame = Frame(rp_mess_Notebook, height=350, width=710)
+                                rp_mess_Notebook.add(rp_emailmessage_Frame, text="E-mail message")
+
+                                rp_mess_Notebook.add(rp_htmlsourse_Frame, )
+                                rp_mess_Notebook.place(x=5, y=90)
+                                
+
+                                
+
+                                from tkinter import font,colorchooser
+                                fontSize=16
+                                fontStyle='Arial'
+                                
+                                def rp_font_style(event):
+                                    global fontStyle
+                                    fontStyle=font_family_variable.get()
+                                    rp_mframe.config(font=(fontStyle,fontSize))
+
+                                def rp_font_size(event):
+                                    global fontSize
+                                    
+                                    fontSize=size_variable.get()
+                                    
+                                    
+                                    rp_mframe.config(font=(fontStyle,fontSize))
+
+                                def rp_bold_text():
+                                    bold_font = font.Font(rp_mframe, rp_mframe.cget("font"))
+                                    bold_font.configure(weight="bold")
+
+                                    rp_mframe.tag_configure("bold", font=bold_font)
+
+                                    current_tags = rp_mframe.tag_names("sel.first")
+
+                                    if "bold" in current_tags:
+                                        rp_mframe.tag_remove("bold", "sel.first", "sel.last")
+                                    else:
+                                        rp_mframe.tag_add("bold", "sel.first", "sel.last")    
+                                
+                                def rp_italic_text():
+                                    italic_font = font.Font(rp_mframe, rp_mframe.cget("font"))
+                                    italic_font.configure(slant="italic")
+
+                                    rp_mframe.tag_configure("italic", font=italic_font)
+
+                                    current_tags = rp_mframe.tag_names("sel.first")
+
+                                    if "italic" in current_tags:
+                                        rp_mframe.tag_remove("italic", "sel.first", "sel.last")
+                                    else:
+                                        rp_mframe.tag_add("italic", "sel.first", "sel.last")
+
+                                def rp_underline_text():
+                                    try:
+                                        if rp_mframe.tag_nextrange('underline_selection', 'sel.first', 'sel.last') != ():
+                                            rp_mframe.tag_remove('underline_selection', 'sel.first', 'sel.last')
+                                        else:
+                                            rp_mframe.tag_add('underline_selection', 'sel.first', 'sel.last')
+                                            rp_mframe.tag_configure('underline_selection', underline=True)
+                                    except TclError:
+                                        pass
+
+                                def rp_color_select():
+                                    color=colorchooser.askcolor()[1]
+                                    if color:
+                                    # if color:
+
+                                        color_font = font.Font(rp_mframe, rp_mframe.cget("font"))
+
+                                        rp_mframe.tag_configure("colored", font=color_font, foreground=color)
+
+                                        current_tags = rp_mframe.tag_names("sel.first")
+
+                                    if "colored" in current_tags:
+                                        rp_mframe.tag_remove("colored", "sel.first", "sel.last")
+                                    else:
+                                        rp_mframe.tag_add("colored", "sel.first", "sel.last")
+
+                                def rp_align_right():
+                                    data=rp_mframe.get(0.0,END)
+                                    rp_mframe.tag_config('right',justify=RIGHT)
+                                    rp_mframe.delete(0.0,END)
+                                    rp_mframe.insert(INSERT,data,'right')
+
+                                def rp_align_left():
+                                    data=rp_mframe.get(0.0,END)
+                                    rp_mframe.tag_config('left',justify=LEFT)
+                                    rp_mframe.delete(0.0,END)
+                                    rp_mframe.insert(INSERT,data,'left')
+
+                                def rp_align_center():
+                                    data=rp_mframe.get(0.0,END)
+                                    rp_mframe.tag_config('center',justify=CENTER)
+                                    rp_mframe.delete(0.0,END)
+                                    rp_mframe.insert(INSERT,data,'center')
+
+                                def add_link():
+                                    
+                                    
+                                    hghf=rp_mframe.selection_get()
+                                    content=hghf
+                                    
+                                    rp_mframe.insert(END, " "+content)
+                                    
+                                    
+                                    
+                                    
+                                def callback(url):
+                                    webbrowser.open_new_tab_url(url)
+
+                                def addlinkbox():
+                                    global top
+                                    top = Toplevel()
+                                    top.title('Hyperlink')
+                                    top.geometry("400x100")
+                                    hyp_lbl = LabelFrame(top,text="Hyperlink Information", height=80, width=300)
+                                    hyp_lbl.place(x=10, y=5)
+
+                                    hyp_lbl1 = Label(top,text="Type:")
+                                    hyp_lbl1.place(x=18, y=24)
+                                    
+                                    def comb_select(event):
+                                        hyper = cb_comb.get()
+                                        if hyper == "(other)":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "(other)")
+                                        elif hyper == "file://":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "file://")
+                                        elif hyper == "ftp://":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "ftp://") 
+                                        elif hyper == "http://":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "http://") 
+                                        elif hyper == "https://":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "https://") 
+                                        elif hyper == "mailto:":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "mailto:") 
+                                        elif hyper == "telnet:":
+                                            hyp= Entry(top,width=35)
+                                            hyp.place(x=90,y=55)
+                                            hyp.insert(END,  "telnet:")
+
+
+                                    cb_comb = StringVar()
+                                    cb1=ttk.Combobox(top,textvariable=cb_comb,width=15)
+                                    cb1.grid(row=1,column=1,padx=90,pady=30)
+                                    cb1['values']=('(other)','file://','ftp://','http://','https://','mailto:','news:','telnet:')
+                                    cb1.current(0)
+                                    cb1.bind('<<ComboboxSelected>>',comb_select)
+
+
+                                    hyp_lbl2 = Label(top,text="URL:")
+                                    hyp_lbl2.place(x=18, y=55)
+                                    global rp_hyper
+                                    rp_hyper = StringVar()
+                                    
+                                    hyp= Entry(top,textvariable=rp_hyper,width=35)
+                                    hyp.place(x=90,y=55)
+
+                                    
+
+                                    hypbtn1 = Button(top,text="OK",width=10, command=add_link)
+                                    hypbtn1.place(x=315,y=8)
+
+                                    hypbtn2 = Button(top,text="Cancel",width=10)
+                                    hypbtn2.place(x=315,y=35)
+
+                                
+
+                                rp_mframe=Text(rp_emailmessage_Frame,undo=True,width=84, bg="white", height=20)
+                                rp_mframe.place(x=10,y=30)
+
+
+                                rp_scrollbar1 = Scrollbar(rp_emailmessage_Frame,orient=VERTICAL,command=rp_mframe.yview)
+                                rp_scrollbar2= Scrollbar(rp_mframe,orient=HORIZONTAL,command=rp_mframe.xview, width=0)
+                                rp_scrollbar2.pack(fill=X,expand=True,side=BOTTOM,padx=310,pady=163)
+                                #   rp_scrollbar2.place(x=0, y=310, height=20,width=670)
+                                rp_mframe.config(xscrollcommand=rp_scrollbar2.set)
+                                rp_mframe.config(yscrollcommand=rp_scrollbar1.set)
+                                rp_scrollbar1.config(command=rp_mframe.yview)
+                                rp_scrollbar1.place(x =690, y=0, height=360)
+                                rp_scrollbar2.config(command=rp_mframe.xview)
+                                
+
+                                rp_btn1=Button(rp_emailmessage_Frame,width=20,height=20,compound = LEFT,image=selectall,command=lambda :rp_mframe.event_generate('<Control a>'))
+                                rp_btn1.place(x=0, y=1)
+
+                                        
+                                rp_btn2=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=cut,command=lambda :rp_mframe.event_generate('<Control x>'))
+                                rp_btn2.place(x=36, y=1)
+
+                                rp_btn3=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=copy,command=lambda :rp_mframe.event_generate('<Control c>'))
+                                rp_btn3.place(x=73, y=1)
+
+                                rp_btn4=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=paste,command=lambda :rp_mframe.event_generate('<Control v>'))
+                                rp_btn4.place(x=105, y=1)
+                                rp_btn5=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=undo, command=lambda:rp_mframe.event_generate("<<Undo>>")).place(x=140, y=1)
+
+                                rp_btn6=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=redo, command=lambda:rp_mframe.event_generate("<<Redo>>")).place(x=175, y=1)
+
+                                rp_btn7=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=bold,command=rp_bold_text)
+                                rp_btn7.place(x=210, y=1)
+
+                                rp_btn8=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=italics,command=rp_italic_text)
+                                rp_btn8.place(x=245, y=1)
+
+                                rp_btn9=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=underline,command=rp_underline_text)
+                                rp_btn9.place(x=280, y=1)
+
+                                rp_btn10=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=left,command=rp_align_left)
+                                rp_btn10.place(x=315, y=1)
+
+                                rp_btn11=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=right,command=rp_align_right)
+                                rp_btn11.place(x=350, y=1)
+
+                                rp_btn12=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=center,command=rp_align_center)
+                                rp_btn12.place(x=385, y=1)
+
+                                rp_btn14=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=remove,command=lambda :rp_mframe.delete(0.0,END))
+                                rp_btn14.place(x=455, y=1)
+                                
+                                rp_btn15=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=color,command=rp_color_select)
+                                rp_btn15.place(x=420, y=1)
+                                rp_btn16=Button(rp_emailmessage_Frame,width=31,height=23,compound = LEFT,image=hyperlink, command=addlinkbox)
+                                rp_btn16.place(x=491, y=1)
+                                global size_variable
+                                size_variable=IntVar()
+
+                                rp_dropcomp11 = ttk.Combobox(rp_emailmessage_Frame, width=6, textvariable=size_variable, values=tuple(range(8,17)))
+                                
+                                rp_dropcomp11.place(x=530, y=5)
+                                
+                                
+                                font_family_variable=StringVar()
+                                font_familyes=font.families()
+                      
+                                rp_dropcomp11.bind('<<ComboboxSelected>>', rp_font_size)
+                                
+                                rp_attachlbframe=LabelFrame(rp_email_Frame,text="Attachment(s)", height=350, width=280)
+                                rp_attachlbframe.place(x=740, y=5)
+
+                                rp_lstfrm=StringVar()  
+                                rp_htcodeframe=Listbox(rp_attachlbframe, height=13, width=43,listvariable=rp_lstfrm, bg="white")
+                                rp_htcodeframe.place(x=5, y=5)
+                                rp_htcodeframe.bind('<Double-Button-1>' , op_file)
+
+                                def rp_deslist():
+                                    rp_laa=rp_htcodeframe.curselection()
+                                    print("hloo",rp_htcodeframe.get(rp_laa))
+                                    rp_yawn=rp_htcodeframe.get(rp_laa)        
+                                    rp_htcodeframe.delete(ACTIVE)
+
+                                rp_lbl_btn_info=Label(rp_attachlbframe, text="Double click on attachment to view").place(x=30, y=230)
+                                rp_btn17=Button(rp_attachlbframe, width=20, text="Add attachment file...", command=rp_UploadAction).place(x=60, y=260)
+                                rp_btn18=Button(rp_attachlbframe, width=20, text="Remove attachment",command=rp_deslist).place(x=60, y=295)
+                                rp_lbl_tt_info=Label(rp_email_Frame, text="You can create predefined invoice, order, estimate\nand payment receipt email templates under Main\nmenu/Settings/E-Mail templates tab")
+                                rp_lbl_tt_info.place(x=740, y=370)
+
+                                rp_ready_frame=Frame(rp_mailDetail, height=20, width=1080, bg="#b3b3b3").place(x=0,y=530)
+                                
+                                rp_sendatalbframe=LabelFrame(rp_account_Frame,text="E-Mail(Sender data)",height=140, width=600)
+                                rp_sendatalbframe.place(x=240, y=165 )
+                                rp_lbl_sendermail=Label(rp_sendatalbframe, text="Company email address").place(x=5, y=10)
+                                rp_sentent=Entry(rp_sendatalbframe, width=40, textvariable=rp_email_from)
+                                rp_sentent.place(x=195, y=10)
+
+                                rp_lbl_senderpswrd=Label(rp_sendatalbframe, text="Email Password").place(x=5, y=40)
+                                rp_pswrdent=Entry(rp_sendatalbframe, width=40, textvariable=rp_email_pswrd,show="*")
+                                rp_pswrdent.place(x=195, y=40)
                             
                         def edit_print():
                             from reportlab.pdfgen import canvas
@@ -5384,12 +5820,136 @@ def main_sign_in():
                             
                             path = filedialog.asksaveasfilename(initialdir=os.getcwd,title="Save File",filetypes=[('Pdf File', '*.pdf',)],defaultextension=".pdf")
 
-                            fileName = path
-                            documentTitle = 'Document title!'
-                            title = 'Invoices List'
-                            pdf = canvas.Canvas(fileName, pagesize=letter)
-                            pdf.setTitle(documentTitle) 
+                            
+
+                            
+
+                            from reportlab.pdfgen import canvas 
+                            from reportlab.lib.colors import Color, black, green, grey
+                            pdf = canvas.Canvas(path, pagesize=letter)
+ 
+                            pdf.setFont('Helvetica-Bold',18)
+                            pdf.drawString(50,730, "Sales")
+                            pdf.drawString(460,730, "ESTIMATE")
+                            
+                            pdf.line(30,700,580,700)
+
+                            
+                            pdf.setFont('Helvetica-Bold',12)
+                            pdf.drawString(460,710, "Estimate No:1080")
+                            pdf.drawString(60,680, "From:")
+                            pdf.drawString(330,680, "To:")
+                            text="asdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+                            wraped_text="\n".join(wrap(text,30))
+                            htg=wraped_text.split('\n') 
+                            vg=len(htg)
+                            if vg>0:
+                                pdf.drawString(60,660,htg[0])
+                                if vg>1:
+                                    pdf.drawString(60,640,htg[1])
+                                    if vg>2:
+                                        pdf.drawString(60,620,htg[2])
+                                        if vg>3:
+                                            pdf.drawString(60,600,htg[3])
+                                        else:
+                                            pass
+                                    else:
+                                        pass
+                                else:
+                                    pass
+                            else:
+                                pass    
+
+                            text="asdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+                            wraped_text="\n".join(wrap(text,30))
+                            htg=wraped_text.split('\n') 
+                            vg=len(htg)
+                            if vg>0:
+                                pdf.drawString(330,660,htg[0])
+                                if vg>1:
+                                    pdf.drawString(330,640,htg[1])
+                                    if vg>2:
+                                        pdf.drawString(330,620,htg[2])
+                                        if vg>3:
+                                            pdf.drawString(330,600,htg[3])
+                                        else:
+                                            pass
+                                    else:
+                                        pass
+                                else:
+                                    pass
+                            else:
+                                pass   
+
+                            pdf.line(30,590,580,590)
+                            pdf.drawString(50,575, "Estimate Date: 2022-01-05")
+                            pdf.drawString(430,575, "Expiration: 2022-01-05 ")
+
+                            
+
+                            
+                            pdf.setLineWidth(.3)
+                      
+                            pdf.line(30,560,580,560)
+                            pdf.line(30,535,580,535)
+                            pdf.drawString(80,545, "Item Description")
+                            pdf.drawString(280,545, "Price")
+                            pdf.drawString(380,545, "Quantity")
+                            pdf.drawString(480,545, "Total")
+
+                            
+
+                            pdf.drawString(80,520, "Item Description")
+                            pdf.drawString(280,520, "Price")
+                            pdf.drawString(380,520, "Quantity")
+                            pdf.drawString(480,520, "Total")
+
+                            y=500
+
+                            pdf.drawString(80,y, "Item Description")
+                            pdf.drawString(280,y, "Price")
+                            pdf.drawString(380,y, "Quantity")
+                            pdf.drawString(480,y, "Total")
+
+                            pdf.drawString(50,y-30, "Note:")
+
+                            text="asdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+                            wraped_text="\n".join(wrap(text,30))
+                            htg=wraped_text.split('\n') 
+                            vg=len(htg)
+                            if vg>0:
+                                pdf.drawString(50,y-50,htg[0])
+                                if vg>1:
+                                    pdf.drawString(50,y-70,htg[1])
+                                    if vg>2:
+                                        pdf.drawString(50,y-90,htg[2])
+                                        if vg>3:
+                                            pdf.drawString(50,y-110,htg[3])
+                                        else:
+                                            pass
+                                    else:
+                                        pass
+                                else:
+                                    pass
+                            else:
+                                pass 
+
+                            pdf.drawString(380,y-30, "Subtotal:")
+                            pdf.drawString(380,y-50, "CGST:")
+                            pdf.drawString(380,y-70, "SGST:")
+
+                            pdf.drawString(380,y-90, "Estimate Total:")
+
+                            pdf.drawString(480,y-30, "10000")
+                            pdf.drawString(480,y-50, "10000")
+                            pdf.drawString(480,y-70, "10000")
+                            pdf.line(380,y-78,580,y-78)
+
+                            pdf.drawString(480,y-90, "10000")
+
+
                             pdf.save()
+                            
                             win32api.ShellExecute(0,"",path,None,".",0) 
 
                         def resestms(event):
@@ -5480,6 +6040,25 @@ def main_sign_in():
                             dcanvas.coords("labels4_1",dwidth/4.5,dheight/1.5)
                             dcanvas.coords("labels4_2",dwidth/4.5,dheight/1.4)
                             dcanvas.coords("labels5",dwidth/1.8,dheight/1.6)
+                            dcanvas.coords("labels5_1",dwidth/1.85,dheight/1.5)
+                            dcanvas.coords("labels5_2",dwidth/1.85,dheight/1.4)
+                            dcanvas.coords("hline3",dwidth/6.8,dheight/1.1,dwidth/1.18,dheight/1.1)
+                            dcanvas.coords("labels6",dwidth/6.8,dheight/1.08)
+                            dcanvas.coords("labels7",dwidth/1.45,dheight/1.08)
+                            dcanvas.coords("pre_tree",dwidth/6.8,dheight/1)
+                            dcanvas.coords("labels8",dwidth/6.8,dheight/0.53)
+                            dcanvas.coords("labels9",dwidth/6.8,dheight/0.51)
+                            dcanvas.coords("labels10",dwidth/1.6,dheight/0.53)
+                            dcanvas.coords("labels11",dwidth/1.3,dheight/0.53)
+                            dcanvas.coords("labels12",dwidth/1.6,dheight/0.52)
+                            dcanvas.coords("labels13",dwidth/1.3,dheight/0.52)
+
+                            dcanvas.coords("labels14",dwidth/1.6,dheight/0.51)
+                            dcanvas.coords("labels15",dwidth/1.3,dheight/0.51)
+                            dcanvas.coords("labels16",dwidth/1.6,dheight/0.496) 
+                            dcanvas.coords("labels17",dwidth/1.3,dheight/0.496)
+                            dcanvas.coords("hline4",dwidth/1.63,dheight/0.498,dwidth/1.22,dheight/0.498)
+
 
                             
 
@@ -5513,13 +6092,13 @@ def main_sign_in():
                         act_btn2 = Button(estm_Canvas_1,text='Delete',width=10,height=1,background="#198fed",activebackground="#1476c5",foreground="white",activeforeground="white",bd=0,command=edit_print)
                         estm_Canvas_1.create_window(0,0,window=act_btn2,tags=("act_btn2")) 
 
-                        act_btn3 = Button(estm_Canvas_1,text='PDF/Print',width=10,height=1,background="#198fed",activebackground="#1476c5",foreground="white",activeforeground="white",bd=0,command=lambda:"rp_savePayment"())
+                        act_btn3 = Button(estm_Canvas_1,text='PDF/Print',width=10,height=1,background="#198fed",activebackground="#1476c5",foreground="white",activeforeground="white",bd=0,command=edit_print)
                         estm_Canvas_1.create_window(0,0,window=act_btn3,tags=("act_btn3")) 
 
                         act_btn4 = ttk.Combobox(estm_Canvas_1,width=7,font=('arial 15'))
                         act_btn4['values'] = ['Share','Edit','Delete']
                         act_btn4.current(0)
-                        act_btn4.bind("<<ComboboxSelected>>","estm_Actions")
+                        act_btn4.bind("<<ComboboxSelected>>",rp_addemail_order)
                         estm_Canvas_1.create_window(0,0,window=act_btn4,tags=("act_btn4"))
 
 
@@ -5546,15 +6125,81 @@ def main_sign_in():
                         labels4 = Label(estm_Canvas_1,height=1,text="From:",font=('arial 12'),background="white",fg="black", anchor="ne")
                         estm_label_win = estm_Canvas_1.create_window(0,0,anchor="ne",window=labels4,tags=("labels4"))
 
-                        labels4_1 = Label(estm_Canvas_1,width=30,height=1,text="Infox Technologies",font=('arial 12'),background="red",fg="black",anchor="nw")
+                        labels4_1 = Label(estm_Canvas_1,width=30,height=1,text="Infox Technologies",font=('arial 12'),background="white",fg="black",anchor="nw")
                         estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels4_1,tags=("labels4_1"))
 
-                        labels4_2 = Label(estm_Canvas_1,width=30,height=5,text="Infox Technologies\n Carinival Infopark\n first floor' Kakkanad,\n ernakulam\n Kerala,682020",font=('arial 12'),background="red",fg="black",justify=LEFT)
+                        labels4_2 = Label(estm_Canvas_1,width=30,height=5,text="Infox Technologies\n Carinival Infopark\n first floor' Kakkanad,\n ernakulam\n Kerala,682020",font=('arial 12'),background="white",fg="black",anchor="nw")
                         estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels4_2,tags=("labels4_2"))
 
 
                         labels5 = Label(estm_Canvas_1,height=1,text="To:",font=('arial 12'),background="white",fg="black", anchor="ne")
                         estm_label_win = estm_Canvas_1.create_window(0,0,anchor="ne",window=labels5,tags=("labels5"))
+
+                        labels5_1 = Label(estm_Canvas_1,width=30,height=1,text="Infox Technologies",font=('arial 12'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels5_1,tags=("labels5_1"))
+
+                        labels5_2 = Label(estm_Canvas_1,width=30,height=5,text="Infox Technologies\n Carinival Infopark\n first floor' Kakkanad,\n ernakulam\n Kerala,682020",font=('arial 12'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels5_2,tags=("labels5_2"))
+
+                        estm_Canvas_1.create_line(0,0,0,0,fill='gray',width=1,tags=("hline3"))
+                        labels6 = Label(estm_Canvas_1,height=1,text="Estimate Date: 2022-03-04",font=('arial 12'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels6,tags=("labels6"))
+
+                        labels7 = Label(estm_Canvas_1,height=1,text="Expiration Date: 2022-03-04",font=('arial 12'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels7,tags=("labels7"))
+
+                        estm_tree_style = ttk.Style()
+                        estm_tree_style.theme_use("default")
+                        estm_tree_style.configure("Treeview",background="white",foreground="black",rowheight=25,font=(None,11),fieldbackground="white")
+                        estm_tree_style.configure("Treeview.Heading",background="white",activeforeground="black",foreground="black",font=(None,11))
+                        inv_scrollbar_1 = Scrollbar(estm_Frame,orient="vertical")
+                        
+                        pre_tree = ttk.Treeview(estm_Canvas_1,height=20,columns=("0","1","2","3"),show="headings",yscrollcommand=inv_scrollbar_1.set)
+                        pre_tree.column("0",width=330,anchor=CENTER)
+                        pre_tree.column("1",width=200,anchor=CENTER)
+                        pre_tree.column("2",width=200,anchor=CENTER)
+                        pre_tree.column("3",width=200,anchor=CENTER)
+                        
+                
+                        pre_tree.heading("0",text="Item Description")
+                        pre_tree.heading("1",text="Price")
+                        pre_tree.heading("2",text="Quantity")
+                        pre_tree.heading("3",text="Total")
+                        
+                        estm_Canvas_1.create_window(0,0,window=pre_tree,anchor="nw",tags=("pre_tree"))
+                        inv_scrollbar_1.grid(row=0,column=2, sticky='ns')
+
+                        labels8 = Label(estm_Canvas_1,height=1,text="Note:",font=('arial 12'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels8,tags=("labels8"))
+
+                        labels9 = Label(estm_Canvas_1,height=10,width=50,text="dsfffffffffffffffffffffffffffffffffffffffffffffffffffffdsfdsfdsfdfdsfsd",font=('arial 12'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels9,tags=("labels9"))
+
+                        labels10 = Label(estm_Canvas_1,height=1,text="Sub Total:",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels10,tags=("labels10"))
+
+                        labels11 = Label(estm_Canvas_1,height=1,text="10000",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels11,tags=("labels11"))
+
+                        labels12 = Label(estm_Canvas_1,height=1,text="cgst:",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels12,tags=("labels12"))
+
+                        labels13 = Label(estm_Canvas_1,height=1,text="10000",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels13,tags=("labels13"))
+
+                        labels14 = Label(estm_Canvas_1,height=1,text="SGST:",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels14,tags=("labels14"))
+
+                        labels15 = Label(estm_Canvas_1,height=1,text="10000",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels15,tags=("labels15"))
+
+                        labels16 = Label(estm_Canvas_1,height=1,text="Estimate Total:",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels16,tags=("labels16"))
+
+                        labels17 = Label(estm_Canvas_1,height=1,text="10000",font=('arial 12 bold'),background="white",fg="black",anchor="nw")
+                        estm_label_win = estm_Canvas_1.create_window(0,0,anchor="nw",window=labels17,tags=("labels17"))
+
+                        estm_Canvas_1.create_line(0,0,0,0,fill='gray',width=1,tags=("hline4"))
 
 
 
